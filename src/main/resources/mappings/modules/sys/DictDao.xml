@@ -34,6 +34,10 @@
 		ORDER BY type, sort, update_date DESC
 	</select>
 	
+	<select id="findAllCompanyList" resultType="Dict">
+	SELECT	ID AS VALUE,NAME AS label,'' AS TYPE,'' AS description,ID AS sort,'' AS parentId FROM company_info ORDER BY ID DESC;
+	</select>
+	
 	<select id="findTypeList" resultType="string">
 		SELECT 
 			type 

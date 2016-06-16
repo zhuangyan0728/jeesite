@@ -82,6 +82,14 @@ public class DictUtils {
 		return dictList;
 	}
 	
+	public static List<Dict> getDictList(){	
+		List<Dict> dictList = dictDao.findAllCompanyList();
+		if (dictList == null){
+			dictList = Lists.newArrayList();
+		}
+		return dictList;
+	}
+	
 	/**
 	 * 返回字典列表（JSON）
 	 * @param type
