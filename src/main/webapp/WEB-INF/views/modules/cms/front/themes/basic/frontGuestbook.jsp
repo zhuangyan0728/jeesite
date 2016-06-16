@@ -52,7 +52,7 @@
 				</li>
 			</c:forEach>
 			<c:if test="${fn:length(page.list) eq 0}">
-				<li>暂时还没有人留言！</li>
+				<li>暂时还没有人留言ffffff！</li>
 			</c:if>
 		</ul>
 		<div class="pagination">${page}</div>
