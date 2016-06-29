@@ -32,6 +32,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -44,8 +45,8 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
  * @version 2013-8-29
  */
 @Controller
-@RequestMapping(value = "${adminPath}/sys/user")
-public class UserController extends BaseController {
+@RequestMapping(value = "${adminPath}/sys/hrUser")
+public class HrUserController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
@@ -53,58 +54,47 @@ public class UserController extends BaseController {
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
-			return systemService.getUser(id);
+			return systemService.getHrUser(id);
 		}else{
 			return new User();
 		}
 	}
 
-	@RequiresPermissions("sys:user:view")
-	@RequestMapping(value = {"index"})
-	public String index(User user, Model model) {
-		return "modules/sys/userIndex";
-	}
-
-	@RequiresPermissions("sys:user:view")
+	@RequiresPermissions("sys:hruser:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
+		Page<User> page = systemService.findhrUser(new Page<User>(request, response), user);
         model.addAttribute("page", page);
-		return "modules/sys/userList";
+		return "modules/sys/hrUserList";
 	}
 	
 	@ResponseBody
-	@RequiresPermissions("sys:user:view")
+	@RequiresPermissions("sys:hruser:view")
 	@RequestMapping(value = {"listData"})
 	public Page<User> listData(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
 		return page;
 	}
 
-	@RequiresPermissions("sys:user:view")
+	@RequiresPermissions("sys:hruser:view")
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
-		if (user.getCompany()==null || user.getCompany().getId()==null){
-			user.setCompany(UserUtils.getUser().getCompany());
-		}
-		if (user.getOffice()==null || user.getOffice().getId()==null){
-			user.setOffice(UserUtils.getUser().getOffice());
-		}
+
 		model.addAttribute("user", user);
 		model.addAttribute("allRoles", systemService.findAllRole());
-		return "modules/sys/userForm";
+		return "modules/sys/hrUserForm";
 	}
 
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions("sys:hruser:edit")
 	@RequestMapping(value = "save")
 	public String save(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/user/list?repage";
+			return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 		}
 		// 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
-		//user.setCompany(new Office(request.getParameter("company.id")));
-		user.setOffice(new Office(request.getParameter("office.id")));
+		user.setCompany(new CompanyInfo(request.getParameter("company.id")));
+		//user.setOffice(new Office(request.getParameter("office.id")));人事专员不用部门
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(user.getNewPassword())) {
 			user.setPassword(SystemService.entryptPassword(user.getNewPassword()));
@@ -118,25 +108,27 @@ public class UserController extends BaseController {
 		}
 		// 角色数据有效性验证，过滤不在授权内的角色
 		List<Role> roleList = Lists.newArrayList();
-		List<String> roleIdList = user.getRoleIdList();
-		for (Role r : systemService.findAllRole()){
-			if (roleIdList.contains(r.getId())){
-				roleList.add(r);
+		try {
+			String defultRoleId = Global.getDefaultHrId();
+			Role hrRole= systemService.getRole(defultRoleId);
+			roleList.add(hrRole);
+			user.setRoleList(roleList);
+			// 保存用户信息
+			systemService.saveUser(user);
+			// 清除当前用户缓存
+			if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
+				UserUtils.clearCache();
+				//UserUtils.getCacheMap().clear();
 			}
+			addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "保存用户失败！失败信息："+e.getMessage());
 		}
-		user.setRoleList(roleList);
-		// 保存用户信息
-		systemService.saveUser(user);
-		// 清除当前用户缓存
-		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())){
-			UserUtils.clearCache();
-			//UserUtils.getCacheMap().clear();
-		}
-		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
-		return "redirect:" + adminPath + "/sys/user/list?repage";
+		
+		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 	}
 	
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions("sys:hruser:edit")
 	@RequestMapping(value = "delete")
 	public String delete(User user, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
@@ -151,7 +143,7 @@ public class UserController extends BaseController {
 			systemService.deleteUser(user);
 			addMessage(redirectAttributes, "删除用户成功");
 		}
-		return "redirect:" + adminPath + "/sys/user/list?repage";
+		return "redirect:" + adminPath + "/sys/hruser/list?repage";
 	}
 	
 	/**
@@ -162,7 +154,7 @@ public class UserController extends BaseController {
 	 * @param redirectAttributes
 	 * @return
 	 */
-	@RequiresPermissions("sys:user:view")
+	@RequiresPermissions("sys:hruser:view")
     @RequestMapping(value = "export", method=RequestMethod.POST)
     public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
@@ -173,7 +165,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/user/list?repage";
+		return "redirect:" + adminPath + "/sys/hruser/list?repage";
     }
 
 	/**
@@ -187,7 +179,7 @@ public class UserController extends BaseController {
     public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/user/list?repage";
+			return "redirect:" + adminPath + "/sys/hruser/list?repage";
 		}
 		try {
 			int successNum = 0;
@@ -224,7 +216,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/user/list?repage";
+		return "redirect:" + adminPath + "/sys/hruser/list?repage";
     }
 	
 	/**
@@ -238,13 +230,14 @@ public class UserController extends BaseController {
     public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
             String fileName = "用户数据导入模板.xlsx";
-    		List<User> list = Lists.newArrayList(); list.add(UserUtils.getUser());
+    		List<User> list = Lists.newArrayList(); 
+    		list.add(UserUtils.getUser());
     		new ExportExcel("用户数据", User.class, 2).setDataList(list).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/user/list?repage";
+		return "redirect:" + adminPath + "/sys/hruser/list?repage";
     }
 
 	/**
@@ -254,7 +247,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequiresPermissions("sys:user:edit")
+	@RequiresPermissions("sys:hruser:edit")
 	@RequestMapping(value = "checkLoginName")
 	public String checkLoginName(String oldLoginName, String loginName) {
 		if (loginName !=null && loginName.equals(oldLoginName)) {
@@ -278,7 +271,7 @@ public class UserController extends BaseController {
 		if (StringUtils.isNotBlank(user.getName())){
 			if(Global.isDemoMode()){
 				model.addAttribute("message", "演示模式，不允许操作！");
-				return "modules/sys/userInfo";
+				return "modules/sys/hruserInfo";
 			}
 			currentUser.setEmail(user.getEmail());
 			currentUser.setPhone(user.getPhone());
@@ -347,26 +340,5 @@ public class UserController extends BaseController {
 		}
 		return mapList;
 	}
-    
-//	@InitBinder
-//	public void initBinder(WebDataBinder b) {
-//		b.registerCustomEditor(List.class, "roleList", new PropertyEditorSupport(){
-//			@Autowired
-//			private SystemService systemService;
-//			@Override
-//			public void setAsText(String text) throws IllegalArgumentException {
-//				String[] ids = StringUtils.split(text, ",");
-//				List<Role> roles = new ArrayList<Role>();
-//				for (String id : ids) {
-//					Role role = systemService.getRole(Long.valueOf(id));
-//					roles.add(role);
-//				}
-//				setValue(roles);
-//			}
-//			@Override
-//			public String getAsText() {
-//				return Collections3.extractToString((List) getValue(), "id", ",");
-//			}
-//		});
-//	}
+
 }

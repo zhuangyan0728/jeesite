@@ -78,6 +78,10 @@ public class SystemService extends BaseService implements InitializingBean {
 	public User getUser(String id) {
 		return UserUtils.get(id);
 	}
+	
+	public User getHrUser(String id) {
+		return UserUtils.getHr(id);
+	}
 
 	/**
 	 * 根据登录名获取用户
@@ -97,7 +101,18 @@ public class SystemService extends BaseService implements InitializingBean {
 		page.setList(userDao.findList(user));
 		return page;
 	}
+		
 	
+	public Page<User> findhrUser(Page<User> page, User user) {
+		// 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
+		user.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "a"));
+		// 设置分页参数
+		user.setPage(page);
+		// 执行分页查询
+		page.setList(userDao.findHrList(user));
+		return page;
+	}
+
 	/**
 	 * 无分页查询人员列表
 	 * @param user

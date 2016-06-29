@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.erp.dao.CompanyInfoDao">
+    
+	<sql id="companyInfoColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.organizecode AS "organizecode",
+		a.taxcode AS "taxcode",
+		a.registeraddress AS "registeraddress",
+		a.contactaddress AS "contactaddress",
+		a.legalperson AS "legalperson",
+		a.phone AS "phone",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="companyInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="CompanyInfo">
+		SELECT 
+			<include refid="companyInfoColumns"/>
+		FROM company_info a
+		<include refid="companyInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CompanyInfo">
+		SELECT 
+			<include refid="companyInfoColumns"/>
+		FROM company_info a
+		<include refid="companyInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CompanyInfo">
+		SELECT 
+			<include refid="companyInfoColumns"/>
+		FROM company_info a
+		<include refid="companyInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO company_info(
+			id,
+			name,
+			organizecode,
+			taxcode,
+			registeraddress,
+			contactaddress,
+			legalperson,
+			phone,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{organizecode},
+			#{taxcode},
+			#{registeraddress},
+			#{contactaddress},
+			#{legalperson},
+			#{phone},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE company_info SET 	
+			name = #{name},
+			organizecode = #{organizecode},
+			taxcode = #{taxcode},
+			registeraddress = #{registeraddress},
+			contactaddress = #{contactaddress},
+			legalperson = #{legalperson},
+			phone = #{phone},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE company_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

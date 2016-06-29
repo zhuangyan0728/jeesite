@@ -69,6 +69,19 @@ public class UserUtils {
 		return user;
 	}
 	
+	public static User getHr(String id){
+		User user = (User)CacheUtils.get(USER_CACHE, USER_CACHE_ID_ + id);
+		if (user ==  null){
+			user = userDao.getHr(id);
+			if (user == null){
+				return null;
+			}
+			user.setRoleList(roleDao.findList(new Role(user)));
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getLoginName(), user);
+		}
+		return user;
+	}
 	/**
 	 * 根据登录名获取用户
 	 * @param loginName

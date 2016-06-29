@@ -71,5 +71,19 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public int updateUserInfo(User user);
-
+	
+	/**
+	 * 查找人事专员列表
+	 * @param user
+	 * @return
+	 */
+	public List<User> findHrList(User user);
+	
+	
+	/**
+	 * 查找人事专员
+	 * @param i
+	 * @return
+	 */
+	public User getHr(String id);
 }
