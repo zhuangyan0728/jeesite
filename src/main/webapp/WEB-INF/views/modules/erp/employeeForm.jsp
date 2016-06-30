@@ -34,9 +34,10 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">所属公司：</label>
+			<label class="control-label">归属公司:</label>
 			<div class="controls">
-				<form:input path="companyid" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+                <sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+					title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

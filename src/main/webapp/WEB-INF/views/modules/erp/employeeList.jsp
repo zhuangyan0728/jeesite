@@ -25,17 +25,18 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>所属公司：</label>
-				<form:input path="companyid" htmlEscape="false" maxlength="64" class="input-medium"/>
+			<li><label>归属公司：</label><sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" 
+				title="公司" url="/erp/companyInfo/treeData?type=1" cssClass="input-small" allowClear="true"/>
 			</li>
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
-			<li><label>性别：</label>
-				<form:radiobuttons path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-			</li>
 			<li><label>身份证号：</label>
 				<form:input path="identityno" htmlEscape="false" maxlength="100" class="input-medium"/>
+			</li>	
+			<li><label>性别：</label>
+				<form:checkboxes path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!--  <form:radiobuttons path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false"/>-->
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -45,8 +46,8 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>所属公司</th>
 				<th>姓名</th>
+				<th>所属公司</th>
 				<th>性别</th>
 				<th>身份证号</th>
 				<th>修改时间</th>
@@ -57,10 +58,10 @@
 		<c:forEach items="${page.list}" var="employee">
 			<tr>
 				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
-					${employee.companyid}
+					${employee.name}
 				</a></td>
 				<td>
-					${employee.name}
+					${employee.company.name}
 				</td>
 				<td>
 					${fns:getDictLabel(employee.sex, 'sex', '')}

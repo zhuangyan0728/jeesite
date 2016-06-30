@@ -4,7 +4,8 @@
     
 	<sql id="employeeColumns">
 		a.id AS "id",
-		a.companyid AS "companyid",
+		a.companyid AS "company.id",
+		c.name AS "company.name",
 		a.name AS "name",
 		a.sex AS "sex",
 		a.identityno AS "identityno",
@@ -31,6 +32,7 @@
 	</sql>
 	
 	<sql id="employeeJoins">
+		left join company_info  c on c.id = a.companyid
 	</sql>
     
 	<select id="get" resultType="Employee">
@@ -48,8 +50,8 @@
 		<include refid="employeeJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="companyid != null and companyid != ''">
-				AND a.companyid = #{companyid}
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.companyid = #{company.id}
 			</if>
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
@@ -69,7 +71,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.update_date desc,  c.ID
 			</otherwise>
 		</choose>
 	</select>
@@ -87,7 +89,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.update_date desc,  c.ID
 			</otherwise>
 		</choose>
 	</select>
@@ -121,7 +123,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{companyid},
+			#{company.id},
 			#{name},
 			#{sex},
 			#{identityno},
@@ -150,7 +152,7 @@
 	
 	<update id="update">
 		UPDATE employee SET 	
-			companyid = #{companyid},
+			companyid = #{company.id},
 			name = #{name},
 			sex = #{sex},
 			identityno = #{identityno},

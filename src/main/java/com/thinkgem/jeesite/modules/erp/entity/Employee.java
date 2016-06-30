@@ -18,7 +18,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 public class Employee extends DataEntity<Employee> {
 	
 	private static final long serialVersionUID = 1L;
-	private String companyid;		// 所属公司
+	private CompanyInfo company;		// 所属公司
 	private String name;		// 姓名
 	private Integer sex;		// 性别
 	private String identityno;		// 身份证号
@@ -45,13 +45,12 @@ public class Employee extends DataEntity<Employee> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="所属公司长度必须介于 1 和 64 之间")
-	public String getCompanyid() {
-		return companyid;
+	public CompanyInfo getCompany() {
+		return company;
 	}
 
-	public void setCompanyid(String companyid) {
-		this.companyid = companyid;
+	public void setCompany(CompanyInfo company) {
+		this.company = company;
 	}
 	
 	@Length(min=1, max=200, message="姓名长度必须介于 1 和 200 之间")
