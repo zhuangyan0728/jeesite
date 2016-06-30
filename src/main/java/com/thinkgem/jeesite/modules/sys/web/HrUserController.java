@@ -109,8 +109,8 @@ public class HrUserController extends BaseController {
 		// 角色数据有效性验证，过滤不在授权内的角色
 		List<Role> roleList = Lists.newArrayList();
 		try {
-			String defultRoleId = Global.getDefaultHrId();
-			Role hrRole= systemService.getRole(defultRoleId);
+			String defultRoleName = Global.getDefaultHrId();
+			Role hrRole= systemService.getRoleByName(defultRoleName);
 			roleList.add(hrRole);
 			user.setRoleList(roleList);
 			// 保存用户信息

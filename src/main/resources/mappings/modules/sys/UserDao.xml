@@ -80,9 +80,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-    	ci.name AS "company.name",
-    	c.parent_id AS "company.parent.id",
-    	c.parent_ids AS "company.parentIds",
+    	o.parent_id AS "company.parent.id",
+    	o.parent_ids AS "company.parentIds",
     	ca.id AS "company.area.id",
     	ca.name AS "company.area.name",
     	ca.parent_id AS "company.area.parent.id",
@@ -111,10 +110,9 @@
     </sql>
     
     <sql id="userJoins">
-    	LEft JOIN company_info ci ON ci.id = a.company_id
-		LEFT JOIN sys_office c ON c.id = a.company_id
+    	INNER JOIN sys_office o ON o.id = a.office_id
+    	LEFT JOIN sys_office c ON c.id = a.office_id
 		LEFT JOIN sys_area ca ON ca.id = c.area_id
-		LEFT JOIN sys_office o ON o.id = a.office_id
 		LEFT JOIN sys_area oa ON oa.id = o.area_id
 		LEFT JOIN sys_user cu ON cu.id = c.primary_person
 		LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person

@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +93,27 @@ public class UserController extends BaseController {
 			user.setOffice(UserUtils.getUser().getOffice());
 		}
 		model.addAttribute("user", user);
+		
+		
+		//将人事专员角色从用户维护中移出
+		List<Role> roleList = systemService.findAllRole();
+	 
+		
+		 
+		try {
+			String defultRoleName = Global.getDefaultHrId();
+			Iterator<Role> iter = roleList.iterator();
+	        while(iter.hasNext()){
+	        	Role b = iter.next();
+	            if(b.getName().toString().equals(defultRoleName)){
+	                iter.remove();
+	            }
+	        }
+			
+		} catch (Exception e) {
+			addMessage( model,"打开用户信息失败！失败信息："+e.getMessage());
+
+		}
 		model.addAttribute("allRoles", systemService.findAllRole());
 		return "modules/sys/userForm";
 	}

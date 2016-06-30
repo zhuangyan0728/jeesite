@@ -183,7 +183,7 @@ public class Global {
 	
     
     public static String getDefaultHrId() throws Exception {
-		String defultid = getConfig("hruser.defultrode.id");
+		String defultid = getConfig("hruser.defultrole.name");
 		if(defultid.equals("")){
 			throw new Exception("请配置默认HR角色ID");
 		}
