@@ -143,7 +143,7 @@ public class HrUserController extends BaseController {
 			systemService.deleteUser(user);
 			addMessage(redirectAttributes, "删除用户成功");
 		}
-		return "redirect:" + adminPath + "/sys/hruser/list?repage";
+		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class HrUserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/hruser/list?repage";
+		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
     }
 
 	/**
@@ -179,7 +179,7 @@ public class HrUserController extends BaseController {
     public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
-			return "redirect:" + adminPath + "/sys/hruser/list?repage";
+			return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 		}
 		try {
 			int successNum = 0;
@@ -216,7 +216,7 @@ public class HrUserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入用户失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/hruser/list?repage";
+		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
     }
 	
 	/**
@@ -237,7 +237,7 @@ public class HrUserController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息："+e.getMessage());
 		}
-		return "redirect:" + adminPath + "/sys/hruser/list?repage";
+		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
     }
 
 	/**
