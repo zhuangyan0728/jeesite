@@ -181,4 +181,13 @@ public class Global {
 		return projectPath;
     }
 	
+    
+    public static String getDefaultHrId() throws Exception {
+		String defultid = getConfig("hruser.defultrole.name");
+		if(defultid.equals("")){
+			throw new Exception("请配置默认HR角色ID");
+		}
+		return defultid;
+	}
+	
 }

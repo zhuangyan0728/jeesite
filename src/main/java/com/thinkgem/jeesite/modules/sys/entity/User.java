@@ -20,6 +20,7 @@ import com.thinkgem.jeesite.common.supcan.annotation.treelist.cols.SupCol;
 import com.thinkgem.jeesite.common.utils.Collections3;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
 
 /**
  * 用户Entity
@@ -29,7 +30,7 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 public class User extends DataEntity<User> {
 
 	private static final long serialVersionUID = 1L;
-	private Office company;	// 归属公司
+	private CompanyInfo company;	// 归属公司
 	private Office office;	// 归属部门
 	private String loginName;// 登录名
 	private String password;// 密码
@@ -96,18 +97,18 @@ public class User extends DataEntity<User> {
 	}
 
 	@JsonIgnore
-	@NotNull(message="归属公司不能为空")
+
 	@ExcelField(title="归属公司", align=2, sort=20)
-	public Office getCompany() {
+	public CompanyInfo getCompany() {
 		return company;
 	}
 
-	public void setCompany(Office company) {
+	public void setCompany(CompanyInfo company) {
 		this.company = company;
 	}
 	
 	@JsonIgnore
-	@NotNull(message="归属部门不能为空")
+
 	@ExcelField(title="归属部门", align=2, sort=25)
 	public Office getOffice() {
 		return office;
@@ -321,4 +322,6 @@ public class User extends DataEntity<User> {
 	public String toString() {
 		return id;
 	}
+
+	
 }

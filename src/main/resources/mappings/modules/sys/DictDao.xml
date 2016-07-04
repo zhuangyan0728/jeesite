@@ -35,7 +35,7 @@
 	</select>
 	
 	<select id="findAllCompanyList" resultType="Dict">
-	SELECT	ID AS VALUE,NAME AS label,'' AS TYPE,'' AS description,ID AS sort,'' AS parentId FROM company_info ORDER BY ID DESC;
+	SELECT	ID AS "value",NAME AS "label",'' AS TYPE,'' AS description,'1' AS sort,'' AS parentId FROM company_info ORDER BY create_date DESC;
 	</select>
 	
 	<select id="findTypeList" resultType="string">

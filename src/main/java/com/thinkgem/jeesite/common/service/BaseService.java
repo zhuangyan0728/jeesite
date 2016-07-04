@@ -53,7 +53,8 @@ public abstract class BaseService {
 						}
 						else if (Role.DATA_SCOPE_COMPANY_AND_CHILD.equals(r.getDataScope())){
 							sqlString.append(" OR " + oa + ".id = '" + user.getCompany().getId() + "'");
-							sqlString.append(" OR " + oa + ".parent_ids LIKE '" + user.getCompany().getParentIds() + user.getCompany().getId() + ",%'");
+							//?????暂时修改
+							sqlString.append(" OR " + oa + ".parent_ids LIKE '" + user.getOffice().getParentIds() + user.getOffice().getId() + ",%'");
 						}
 						else if (Role.DATA_SCOPE_COMPANY.equals(r.getDataScope())){
 							sqlString.append(" OR " + oa + ".id = '" + user.getCompany().getId() + "'");
@@ -148,7 +149,8 @@ public abstract class BaseService {
 				sqlString.append(" AND EXISTS (SELECT 1 FROM SYS_OFFICE");
 				sqlString.append(" WHERE type='2'");
 				sqlString.append(" AND (id = '" + user.getCompany().getId() + "'");
-				sqlString.append(" OR parent_ids LIKE '" + user.getCompany().getParentIds() + user.getCompany().getId() + ",%')");
+				//?????暂时修改
+				sqlString.append(" OR parent_ids LIKE '" + user.getOffice().getParentIds() + user.getOffice().getId() + ",%')");
 				sqlString.append(" AND " + where +")");
 			}
 			else if (Role.DATA_SCOPE_COMPANY.equals(dataScopeString)){

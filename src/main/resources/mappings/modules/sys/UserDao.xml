@@ -80,9 +80,8 @@
 		a.update_by AS "updateBy.id",
 		a.update_date,
 		a.del_flag,
-    	c.name AS "company.name",
-    	c.parent_id AS "company.parent.id",
-    	c.parent_ids AS "company.parentIds",
+    	o.parent_id AS "company.parent.id",
+    	o.parent_ids AS "company.parentIds",
     	ca.id AS "company.area.id",
     	ca.name AS "company.area.name",
     	ca.parent_id AS "company.area.parent.id",
@@ -111,9 +110,9 @@
     </sql>
     
     <sql id="userJoins">
-		LEFT JOIN sys_office c ON c.id = a.company_id
+    	INNER JOIN sys_office o ON o.id = a.office_id
+    	LEFT JOIN sys_office c ON c.id = a.office_id
 		LEFT JOIN sys_area ca ON ca.id = c.area_id
-		LEFT JOIN sys_office o ON o.id = a.office_id
 		LEFT JOIN sys_area oa ON oa.id = o.area_id
 		LEFT JOIN sys_user cu ON cu.id = c.primary_person
 		LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
@@ -122,6 +121,37 @@
 		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
         LEFT JOIN sys_role r ON r.id = ur.role_id -->
     </sql>
+    
+    
+     <sql id="hruserColumns">
+    	a.id,
+    	a.company_id AS "company.id",
+    	a.office_id AS "office.id",
+    	a.login_name,
+    	a.password,
+    	a.no,
+		a.name,
+		a.email,
+		a.phone,
+		a.mobile,
+		a.user_type,
+		a.login_ip,
+		a.login_date,
+		a.remarks,
+		a.login_flag,
+		a.photo,
+		a.create_by AS "createBy.id",
+		a.create_date,
+		a.update_by AS "updateBy.id",
+		a.update_date,
+		a.del_flag,
+    	c.name AS "company.name"
+    </sql>
+    
+    <sql id="hruserJoins">
+		inner JOIN company_info c ON c.id = a.company_id
+    </sql>
+	
 	
 	<!-- 根据编号获得用户 -->
 	<select id="get" resultType="User">
@@ -191,6 +221,46 @@
 			</when>
 			<otherwise>
 				ORDER BY c.code, o.code, a.name
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findHrList" resultType="User">
+		SELECT
+			<include refid="hruserColumns"/>
+		FROM sys_user a
+		<include refid="hruserJoins"/>
+		<if test="role != null and role.id != null and role.id != ''">
+			JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
+		</if>
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+		<if test="company != null and company.id != null and company.id != ''">
+			AND (c.id = #{company.id})
+		</if>
+		<!-- 如果不是超级管理员，则不显示超级管理员用户 -->
+		<if test="!currentUser.admin">
+			AND a.id != '1'
+		</if>
+		<if test="loginName != null and loginName != ''">
+			AND a.login_name like 
+					<if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
+		</if>
+		<if test="name != null and name != ''">
+			AND a.name like 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
+		</if>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY c.name, a.name
 			</otherwise>
 		</choose>
 	</select>
@@ -340,4 +410,13 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="getHr" resultType="User">
+		SELECT
+			<include refid="hruserColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+		FROM sys_user a
+		<include refid="hruserJoins"/><!-- 
+		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
+		WHERE a.id = #{id}
+	</select>
 </mapper>

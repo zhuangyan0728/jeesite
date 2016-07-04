@@ -88,7 +88,9 @@ public class Runnable implements java.lang.Runnable {
 				}
 				refresh = true;
 
-				System.out.println("========= Enabled refresh mybatis mapper =========");
+				
+				log.info("========= Enabled refresh mybatis mapper 111=========");
+				System.out.println("========= Enabled refresh mybatis mapper 222=========");
 
 				while (true) {
 					try {
