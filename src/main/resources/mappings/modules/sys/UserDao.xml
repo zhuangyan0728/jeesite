@@ -61,6 +61,7 @@
     <sql id="userColumns">
     	a.id,
     	a.company_id AS "company.id",
+    	ci.name AS "company.name",
     	a.office_id AS "office.id",
     	a.login_name,
     	a.password,
@@ -111,6 +112,7 @@
     
     <sql id="userJoins">
     	INNER JOIN sys_office o ON o.id = a.office_id
+    	LEFT JOIN company_info ci ON ci.id = a.company_id
     	LEFT JOIN sys_office c ON c.id = a.office_id
 		LEFT JOIN sys_area ca ON ca.id = c.area_id
 		LEFT JOIN sys_area oa ON oa.id = o.area_id

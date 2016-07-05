@@ -150,7 +150,7 @@ public class SystemService extends BaseService implements InitializingBean {
 		}else{
 			// 清除原用户机构用户缓存
 			User oldUser = userDao.get(user.getId());
-			if (oldUser.getOffice() != null && oldUser.getOffice().getId() != null){
+			if (oldUser!=null && oldUser.getOffice() != null && oldUser.getOffice().getId() != null){
 				CacheUtils.remove(UserUtils.USER_CACHE, UserUtils.USER_CACHE_LIST_BY_OFFICE_ID_ + oldUser.getOffice().getId());
 			}
 			// 更新用户数据
