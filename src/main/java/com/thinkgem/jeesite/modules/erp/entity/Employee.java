@@ -4,16 +4,17 @@
 package com.thinkgem.jeesite.modules.erp.entity;
 
 import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
- * 企业人才管理Entity
+ * 企业人才信息管理Entity
  * @author zhuangyan
- * @version 2016-06-27
+ * @version 2016-07-07
  */
 public class Employee extends DataEntity<Employee> {
 	
@@ -32,7 +33,12 @@ public class Employee extends DataEntity<Employee> {
 	private Integer sort;		// 人才分类
 	private Integer ifkey;		// 是否关键岗位
 	private Integer ifresidencecard;		// 是否申领居住证
+	private String residenceno; //居住证号码
 	private Integer ifquite;		// 是否离职
+	private Date validity;		// 居住证有效期
+	private String integral;		// 居住积分
+	private String virtualintegral;		// 虚拟打分
+	private String situation;		// 子女入学情况
 	private Date qutietime;		// 离职时间
 	private Integer ifsenioremp;		// 是否高端人才
 	private String reward;		// 奖励情况
@@ -168,6 +174,51 @@ public class Employee extends DataEntity<Employee> {
 
 	public void setIfresidencecard(Integer ifresidencecard) {
 		this.ifresidencecard = ifresidencecard;
+	}
+	
+	@Length(min=0, max=100, message="居住证号码长度必须介于 0 和 100 之间")
+	public String getResidenceno() {
+		return residenceno;
+	}
+
+	public void setResidenceno(String residenceno) {
+		this.residenceno = residenceno;
+	}
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getValidity() {
+		return validity;
+	}
+
+	public void setValidity(Date validity) {
+		this.validity = validity;
+	}
+	
+	@Length(min=0, max=10, message="居住积分长度必须介于 0 和 10 之间")
+	public String getIntegral() {
+		return integral;
+	}
+
+	public void setIntegral(String integral) {
+		this.integral = integral;
+	}
+	
+	@Length(min=0, max=10, message="虚拟打分长度必须介于 0 和 10 之间")
+	public String getVirtualintegral() {
+		return virtualintegral;
+	}
+
+	public void setVirtualintegral(String virtualintegral) {
+		this.virtualintegral = virtualintegral;
+	}
+	
+	@Length(min=0, max=500, message="子女入学情况长度必须介于 0 和 500 之间")
+	public String getSituation() {
+		return situation;
+	}
+
+	public void setSituation(String situation) {
+		this.situation = situation;
 	}
 	
 	@NotNull(message="是否离职不能为空")

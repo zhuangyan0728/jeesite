@@ -19,6 +19,11 @@
 		a.sort AS "sort",
 		a.ifkey AS "ifkey",
 		a.ifresidencecard AS "ifresidencecard",
+		a.residenceno AS "residenceno",
+		a.validity AS "validity",
+		a.integral AS "integral",
+		a.virtualintegral AS "virtualintegral",
+		a.situation AS "situation",
 		a.ifquite AS "ifquite",
 		a.qutietime AS "qutietime",
 		a.ifsenioremp AS "ifsenioremp",
@@ -63,7 +68,19 @@
 				AND a.sex = #{sex}
 			</if>
 			<if test="identityno != null and identityno != ''">
-				AND a.identityno = #{identityno}
+				AND a.identityno LIKE 
+					<if test="dbName == 'oracle'">'%'||#{identityno}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{identityno}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{identityno},'%')</if>
+			</if>
+			<if test="residenceplace != null and residenceplace != ''">
+				AND a.residenceplace = #{residenceplace}
+			</if>
+			<if test="martitalstatus != null and martitalstatus != ''">
+				AND a.martitalstatus = #{martitalstatus}
+			</if>
+			<if test="education != null and education != ''">
+				AND a.education = #{education}
 			</if>
 		</where>
 		<choose>
@@ -111,6 +128,11 @@
 			sort,
 			ifkey,
 			ifresidencecard,
+			residenceno,
+			validity,
+			integral,
+			virtualintegral,
+			situation,
 			ifquite,
 			qutietime,
 			ifsenioremp,
@@ -137,6 +159,11 @@
 			#{sort},
 			#{ifkey},
 			#{ifresidencecard},
+			#{residenceno},
+			#{validity},
+			#{integral},
+			#{virtualintegral},
+			#{situation},
 			#{ifquite},
 			#{qutietime},
 			#{ifsenioremp},
@@ -166,6 +193,11 @@
 			sort = #{sort},
 			ifkey = #{ifkey},
 			ifresidencecard = #{ifresidencecard},
+			residenceno = #{residenceno},
+			validity = #{validity},
+			integral = #{integral},
+			virtualintegral = #{virtualintegral},
+			situation = #{situation},
 			ifquite = #{ifquite},
 			qutietime = #{qutietime},
 			ifsenioremp = #{ifsenioremp},

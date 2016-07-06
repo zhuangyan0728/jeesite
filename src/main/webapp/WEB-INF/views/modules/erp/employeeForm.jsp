@@ -144,6 +144,38 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">居住证号码：</label>
+			<div class="controls">
+				<form:input path="residenceno" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">居住证有效期：</label>
+			<div class="controls">
+				<input name="validity" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${employee.validity}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">居住积分：</label>
+			<div class="controls">
+				<form:input path="integral" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">虚拟打分：</label>
+			<div class="controls">
+				<form:input path="virtualintegral" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">子女入学情况：</label>
+			<div class="controls">
+				<form:input path="situation" htmlEscape="false" maxlength="500" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">是否离职：</label>
 			<div class="controls">
 				<form:radiobuttons path="ifquite" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
@@ -153,10 +185,9 @@
 		<div class="control-group">
 			<label class="control-label">离职时间：</label>
 			<div class="controls">
-				<input name="qutietime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+				<input name="qutietime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${employee.qutietime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				<span class="help-inline"></span>
 			</div>
 		</div>
 		<div class="control-group">
