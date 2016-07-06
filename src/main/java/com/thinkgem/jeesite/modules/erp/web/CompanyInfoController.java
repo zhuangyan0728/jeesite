@@ -102,5 +102,22 @@ public class CompanyInfoController extends BaseController {
 		}
 		return mapList;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "checkCompanyName")
+	public String checkCompanyName(String companyname,String name) {
+		if (companyname == companyname){
+			return "true";
+		}
+		System.out.print(name);
+		
+		
+		if (name == companyname){
+			return "true";
+		}
+		return "false";
+	}
 
 }
+
+	
