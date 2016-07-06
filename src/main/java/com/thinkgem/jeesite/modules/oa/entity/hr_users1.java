@@ -9,7 +9,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
  * @author henry
  * @version 2016-06-20
  */
-public class hr_users extends DataEntity<hr_users> {
+public class hr_users1 extends DataEntity<hr_users1> {
 	
 	private static final long serialVersionUID = 1L;	
 	private String nickname;		

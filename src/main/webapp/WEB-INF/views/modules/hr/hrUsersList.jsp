@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>通知管理</title>
+	<title>人事专员管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/oa/oaNotify/${hr_users.self?'self':''}">人事专员信息列表</a></li>
-		<c:if test="${!hr_users.self}"><shiro:hasPermission name="oa:oaNotify:edit"><li><a href="${ctx}/oa/oaNotify/form">人事添加</a></li></shiro:hasPermission></c:if>
+		<li class="active"><a href="${ctx}/hr/hrUsers/${hr_users.self?'self':''}">人事专员信息列表</a></li>
+		<c:if test="${!hr_users.self}"><shiro:hasPermission name="oa:oaNotify:edit"><li><a href="${ctx}/hr/hrUsers/form">人事添加</a></li></shiro:hasPermission></c:if>
 	</ul>
-	<form:form id="searchForm" modelAttribute="hr_users" action="${ctx}/oa/oaNotify/${hr_users.self?'self':''}" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="hr_users" action="${ctx}/hr/hrUsers/${hr_users.self?'self':''}" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -71,20 +71,9 @@
 				<td>
 					${hr_users.password}
 				</td>
-				<%-- <td>
-					<c:if test="${requestScope.hr_users.self}">
-						${fns:getDictLabel(hr_users.readFlag, 'oa_notify_read', '')}
-					</c:if>
-					<c:if test="${!requestScope.hr_users.self}">
-						${hr_users.readNum} / ${hr_users.readNum + hr_users.unReadNum}
-					</c:if>
-				</td>
-				<td>
-					<fmt:formatDate value="${hr_users.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td> --%>
-				<c:if test="${!requestScope.hr_users.self}"><shiro:hasPermission name="oa:oaNotify:edit"><td>
-    				<a href="${ctx}/oa/oaNotify/form?id=${hr_users.id}">修改</a>
-					<a href="${ctx}/oa/oaNotify/delete?id=${hr_users.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
+				<c:if test="${!requestScope.hr_users.self}"><shiro:hasPermission name="hr:hrUsers:edit"><td>
+    				<a href="${ctx}/hr/hrUsers/form?id=${hr_users.id}">修改</a>
+					<a href="${ctx}/hr/hrUsers/delete?id=${hr_users.id}" onclick="return confirmx('确认要删除该通知吗？', this.href)">删除</a>
 				</td></shiro:hasPermission></c:if>
 			</tr>
 		</c:forEach>

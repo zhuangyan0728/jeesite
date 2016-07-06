@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.oa.service;
+package com.thinkgem.jeesite.modules.hr.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,20 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.modules.oa.entity.hr_users1;
-import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
+import com.thinkgem.jeesite.modules.hr.entity.hr_users;
+import com.thinkgem.jeesite.modules.hr.dao.hrUsersDao;
 
 /**
- * 通知通告Service
- * @author ThinkGem
- * @version 2014-05-16
+ * 人事专员Service
+ * @author henry
+ * @version 2016-06-16
  */
 @Service
 @Transactional(readOnly = true)
-public class OaNotifyService extends CrudService<OaNotifyRecordDao,hr_users1> {
+public class hrUsersService extends CrudService<hrUsersDao,hr_users> {
 
 	@Autowired
-	private OaNotifyRecordDao oaNotifyRecordDao;
+	private hrUsersDao hrUserDao;
 
 	/**
 	 * 获取人事专员记录
@@ -45,9 +45,9 @@ public class OaNotifyService extends CrudService<OaNotifyRecordDao,hr_users1> {
 		return hr_users;
 	}*/
 	
-	public Page<hr_users1> find(Page<hr_users1> page, hr_users1 hr_users) {
+	public Page<hr_users> find(Page<hr_users> page, hr_users hr_users) {
 		hr_users.setPage(page);
-		page.setList(oaNotifyRecordDao.findList(hr_users));
+		page.setList(hrUserDao.findList(hr_users));
 		return page;
 	}
 	
@@ -61,7 +61,7 @@ public class OaNotifyService extends CrudService<OaNotifyRecordDao,hr_users1> {
 	}*/
 	
 	@Transactional(readOnly = false)
-	public void save(hr_users1 hr_users) {
+	public void save(hr_users hr_users) {
 		super.save(hr_users);
 		
 		/*// 更新发送接受人记录

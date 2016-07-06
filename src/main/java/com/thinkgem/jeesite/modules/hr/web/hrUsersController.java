@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package com.thinkgem.jeesite.modules.oa.web;
+package com.thinkgem.jeesite.modules.hr.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
-import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
-import com.thinkgem.jeesite.modules.oa.entity.hr_users1;
-import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
+import com.thinkgem.jeesite.modules.hr.entity.hr_users;
+import com.thinkgem.jeesite.modules.hr.service.hrUsersService;
 
 /**
  * 人事专员Controller
@@ -29,20 +28,20 @@ import com.thinkgem.jeesite.modules.oa.service.OaNotifyService;
  * @version 2016-06-16
  */
 @Controller
-@RequestMapping(value = "${adminPath}/oa/oaNotify")
-public class OaNotifyController extends BaseController {
+@RequestMapping(value = "${adminPath}/hr/hrUsers")
+public class hrUsersController extends BaseController {
 
 	@Autowired
-	private OaNotifyService oaNotifyService;
+	private hrUsersService hrUserService;
 	
 	@ModelAttribute
-	public hr_users1 get(@RequestParam(required=false) String id) {
-		hr_users1 entity = null;
+	public hr_users get(@RequestParam(required=false) String id) {
+		hr_users entity = null;
 		if (StringUtils.isNotBlank(id)){
-			entity = oaNotifyService.get(id);
+			entity = hrUserService.get(id);
 		}
 		if (entity == null){
-			entity = new hr_users1();
+			entity = new hr_users();
 		}
 		return entity;
 	}
@@ -50,12 +49,12 @@ public class OaNotifyController extends BaseController {
 	/*
 	 * 查询人事专员List
 	 */
-	@RequiresPermissions("oa:oaNotify:view")
+	@RequiresPermissions("hr:hrUsers:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(hr_users1 hr_users, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<hr_users1> page = oaNotifyService.find(new Page<hr_users1>(request, response), hr_users);
+	public String list(hr_users hr_users, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<hr_users> page = hrUserService.find(new Page<hr_users>(request, response), hr_users);
 		model.addAttribute("page", page);
-		return "modules/oa/oaNotifyList";
+		return "modules/hr/hrUsersList";
 	}
 
 	/*@RequiresPermissions("oa:oaNotify:view")
@@ -71,24 +70,24 @@ public class OaNotifyController extends BaseController {
 	/*
 	 * 人事专员详细信息view--带编辑
 	 */
-	@RequiresPermissions("oa:oaNotify:view")
+	@RequiresPermissions("hr:hrUsers:view")
 	@RequestMapping(value = "form")
-	public String form(hr_users1 hr_users, Model model) {		
-		hr_users = oaNotifyService.get(hr_users);	
+	public String form(hr_users hr_users, Model model) {		
+		hr_users = hrUserService.get(hr_users);	
 		if(hr_users==null)
 		{
-			hr_users=new hr_users1();
+			hr_users=new hr_users();
 		}
 		model.addAttribute("hr_users", hr_users);
-		return "modules/oa/oaNotifyForm";
+		return "modules/hr/hrUsersForm";
 	}
 
 	/*
 	 * 人事专员详细信息--保存
 	 */
-	@RequiresPermissions("oa:oaNotify:edit")
+	@RequiresPermissions("hr:hrUsers:edit")
 	@RequestMapping(value = "save")
-	public String save(hr_users1 hr_users, Model model, RedirectAttributes redirectAttributes) {
+	public String save(hr_users hr_users, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, hr_users)){
 			return form(hr_users, model);
 		}
@@ -100,31 +99,31 @@ public class OaNotifyController extends BaseController {
 				return "redirect:" + adminPath + "/oa/oaNotify/form?id="+oaNotify.getId();
 			}
 		}*/
-		oaNotifyService.save(hr_users);
+		hrUserService.save(hr_users);
 		addMessage(redirectAttributes, "保存成功");
-		return "redirect:" + adminPath + "/oa/oaNotify/?repage";
+		return "redirect:" + adminPath + "/hr/hrUsers/?repage";
 	}
 	
 	/*
 	 * 人事专员详细信息--删除
 	 */
-	@RequiresPermissions("oa:oaNotify:edit")
+	@RequiresPermissions("hr:hrUsers:edit")
 	@RequestMapping(value = "delete")
-	public String delete(hr_users1 hr_users, RedirectAttributes redirectAttributes) {
-		oaNotifyService.delete(hr_users);
+	public String delete(hr_users hr_users, RedirectAttributes redirectAttributes) {
+		hrUserService.delete(hr_users);
 		addMessage(redirectAttributes, "删除通知成功");
-		return "redirect:" + adminPath + "/oa/oaNotify/?repage";
+		return "redirect:" + adminPath + "/hr/hrUsers/?repage";
 	}
 	
 	/*
 	 * 【查询】
 	 */
 	@RequestMapping(value = "self")
-	public String selfList(hr_users1 hr_users, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String selfList(hr_users hr_users, HttpServletRequest request, HttpServletResponse response, Model model) {
 		hr_users.setSelf(true);
-		Page<hr_users1> page = oaNotifyService.find(new Page<hr_users1>(request, response), hr_users);
+		Page<hr_users> page = hrUserService.find(new Page<hr_users>(request, response), hr_users);
 		model.addAttribute("page", page);
-		return "modules/oa/oaNotifyList";
+		return "modules/hr/hrUsersList";
 	}
 
 	/**
@@ -142,16 +141,16 @@ public class OaNotifyController extends BaseController {
 	/*
 	 * 人事专员详细信息view--不编辑
 	 */
-	@RequestMapping(value = "view")
+	/*@RequestMapping(value = "view")
 	public String view(OaNotify oaNotify, Model model) {
 		if (StringUtils.isNotBlank(oaNotify.getId())){
 			//oaNotifyService.updateReadFlag(oaNotify);
 			//oaNotify = oaNotifyService.getRecordList(oaNotify);
 			model.addAttribute("oaNotify", oaNotify);
-			return "modules/oa/oaNotifyForm";
+			return "modules/hr/hrUsersForm";
 		}
-		return "redirect:" + adminPath + "/oa/oaNotify/self?repage";
-	}
+		return "redirect:" + adminPath + "/hr/hrUsers/self?repage";
+	}*/
 
 	/**
 	 * 查看我的通知-数据
