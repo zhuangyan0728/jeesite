@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.service.dao.ServiceReleaseFeedbackDao">
+    
+	<sql id="serviceReleaseFeedbackColumns">
+		a.id AS "id",
+		a.re_id AS "reId",
+		a.re_name AS "service_release.id",
+		d.name AS "service_release.name",
+		a.company AS "company.id",
+		c.name AS "company.name",
+		a.content AS "content",
+		a.contacts AS "contacts",
+		a.telephone AS "telephone",
+		a.remarks AS "remarks",
+		a.update_date AS "updateDate",
+		a.create_by AS "createBy.id",
+		a.update_by AS "updateBy.id",
+		a.del_flag AS "delFlag",
+		a.create_date AS "createDate"
+	</sql>
+	
+	<sql id="serviceReleaseFeedbackJoins">
+	left join company_info  c on c.id = a.company
+	left join service_release  d on d.id = a.re_name
+	</sql>
+    
+	<select id="get" resultType="ServiceReleaseFeedback">
+		SELECT 
+			<include refid="serviceReleaseFeedbackColumns"/>
+		FROM service_release_feedback a
+		<include refid="serviceReleaseFeedbackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findListbyRename" resultType="ServiceReleaseFeedback">
+		SELECT 
+			<include refid="serviceReleaseFeedbackColumns"/>
+		FROM service_release_feedback a
+		<include refid="serviceReleaseFeedbackJoins"/>
+		WHERE a.re_name = #{re_name}
+	</select>
+	
+	<select id="findList" resultType="ServiceReleaseFeedback">
+		SELECT 
+			<include refid="serviceReleaseFeedbackColumns"/>
+		FROM service_release_feedback a
+		<include refid="serviceReleaseFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="serviceRelease != null and serviceRelease.id != null and serviceRelease.id != ''">
+				<!-- AND a.re_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{reName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{reName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{reName},'%')</if> -->
+					AND a.re_name = #{serviceRelease.id}
+			</if>
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company = #{company.id}
+			</if>
+			<if test="beginUpdateDate != null and endUpdateDate != null and beginUpdateDate != '' and endUpdateDate != ''">
+				AND a.update_date BETWEEN #{beginUpdateDate} AND #{endUpdateDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ServiceReleaseFeedback">
+		SELECT 
+			<include refid="serviceReleaseFeedbackColumns"/>
+		FROM service_release_feedback a
+		<include refid="serviceReleaseFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO service_release_feedback(
+			id,
+			re_id,
+			re_name,
+			company,
+			content,
+			contacts,
+			telephone,
+			remarks,
+			update_date,
+			create_by,
+			update_by,
+			del_flag,
+			create_date
+		) VALUES (
+			#{id},
+			#{reId},
+			#{serviceRelease.id},
+			#{company.id},
+			#{content},
+			#{contacts},
+			#{telephone},
+			#{remarks},
+			#{updateDate},
+			#{createBy.id},
+			#{updateBy.id},
+			#{delFlag},
+			#{createDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE service_release_feedback SET 	
+			re_id = #{reId},
+			re_name = #{serviceRelease.id},
+			company = #{company.id},
+			content = #{content},
+			contacts = #{contacts},
+			telephone = #{telephone},
+			remarks = #{remarks},
+			update_date=#{updateDate},
+			update_by = #{updateBy.id}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE service_release_feedback SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

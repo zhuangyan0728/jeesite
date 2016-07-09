@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.service.dao.ServiceReleaseFeedbackDealtDao">
+    
+	<sql id="serviceReleaseFeedbackDealtColumns">
+		a.id AS "id",
+		a.d_name AS "service_release.id",
+		d.name AS "service_release.name",
+		a.company AS "company",
+		a.company AS "company.id",
+		c.name AS "company.name",
+		a.content AS "content",
+		a.company_view AS "companyView",
+		a.shcedule AS "shcedule",
+		a.remark AS "remark",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag",
+		a.service_date AS "serviceDate"
+	</sql>
+	
+	<sql id="serviceReleaseFeedbackDealtJoins">
+	left join company_info  c on c.id = a.company
+	left join service_release  d on d.id = a.d_name
+	</sql>
+    
+	<select id="get" resultType="ServiceReleaseFeedbackDealt">
+		SELECT 
+			<include refid="serviceReleaseFeedbackDealtColumns"/>
+		FROM service_release_feedback_dealt a
+		<include refid="serviceReleaseFeedbackDealtJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ServiceReleaseFeedbackDealt">
+		SELECT 
+			<include refid="serviceReleaseFeedbackDealtColumns"/>
+		FROM service_release_feedback_dealt a
+		<include refid="serviceReleaseFeedbackDealtJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.company = #{company.id}
+			</if>
+			<if test="content != null and content != ''">
+				AND a.content LIKE 
+					<if test="dbName == 'oracle'">'%'||#{content}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{content}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{content},'%')</if>
+			</if>
+			<if test="shcedule != null and shcedule != ''">
+				AND a.shcedule LIKE 
+					<if test="dbName == 'oracle'">'%'||#{shcedule}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{shcedule}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{shcedule},'%')</if>
+			</if>
+			<if test="beginServiceDate != null and endServiceDate != null and beginServiceDate != '' and endServiceDate != ''">
+				AND a.service_date BETWEEN #{beginServiceDate} AND #{endServiceDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ServiceReleaseFeedbackDealt">
+		SELECT 
+			<include refid="serviceReleaseFeedbackDealtColumns"/>
+		FROM service_release_feedback_dealt a
+		<include refid="serviceReleaseFeedbackDealtJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO service_release_feedback_dealt(
+			id,
+			d_name,
+			company,
+			content,
+			company_view,
+			shcedule,
+			remark,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag,
+			service_date
+		) VALUES (
+			#{id},
+			#{serviceRelease.id},
+			#{company.id},
+			#{content},
+			#{companyView},
+			#{shcedule},
+			#{remark},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag},
+			#{serviceDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE service_release_feedback_dealt SET 	
+			d_name = #{serviceRelease.id},
+			company = #{company.id},
+			content = #{content},
+			company_view = #{companyView},
+			shcedule = #{shcedule},
+			remark = #{remark},
+			service_date = #{serviceDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE service_release_feedback_dealt SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
