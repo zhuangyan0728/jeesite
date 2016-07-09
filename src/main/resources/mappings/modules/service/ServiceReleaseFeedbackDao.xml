@@ -7,6 +7,7 @@
 		a.re_id AS "reId",
 		a.re_name AS "service_release.id",
 		d.name AS "service_release.name",
+		d.content AS "service_release.content",
 		a.company AS "company.id",
 		c.name AS "company.name",
 		a.content AS "content",
