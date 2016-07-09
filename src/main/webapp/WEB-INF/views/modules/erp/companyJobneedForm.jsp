@@ -45,7 +45,7 @@
 			<label class="control-label">归属公司22:</label>
 			<div class="controls">
                 <sys:treeselect id="company22" name="company.id" value="${companyJobneed.company.id}" labelName="company.name22" labelValue="${companyJobneed.company.name}"
-					selectParam="companyName"	title="公司222" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" />
+					queryParam="companyName" title="公司222" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

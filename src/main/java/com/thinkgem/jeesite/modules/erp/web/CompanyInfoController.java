@@ -95,7 +95,6 @@ public class CompanyInfoController extends BaseController {
 		if(StringUtils.isNotBlank(param)){
 			companyInfo.setName(param);
 		}
-		companyInfo.setName(param);
 		List<CompanyInfo> list = companyInfoService.findList(companyInfo);
 		for (int i=0; i<list.size(); i++){
 			CompanyInfo e = list.get(i);
