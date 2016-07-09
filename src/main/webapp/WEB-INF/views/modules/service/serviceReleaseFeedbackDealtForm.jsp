@@ -7,7 +7,22 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
-			
+			$("#content").focus(
+					function(){
+						$.ajax({
+							url: "${ctx}/service/serviceReleaseFeedback/getContentAndCompanyView?releaseId="+$("#serviceReleaseId").val()+"&companyId="+$("#companyId").val(),
+							type: 'GET',
+							dataType: 'json',
+							cache: false,
+							async: true,
+						}).done(function(data) {
+							$("#content").val(data.content);
+							$("#companyView").val(data.view);
+						}).fail(function(jqXHR, textStatus){
+							console.log('Get HighLights['+processInstanceId+'] failure: ', textStatus, jqXHR);
+						});
+					
+			}); 
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -37,7 +52,7 @@
 		<div class="control-group">
 			<label class="control-label">服务名称：</label>
 			<div class="controls">
-				<sys:treeselect id="serviceRelease" name="serviceRelease.id" value="${serviceReleaseFeedback.serviceRelease.id}" labelName="serviceRelease.name" labelValue="${serviceReleaseFeedback.serviceRelease.name}" 
+				<sys:treeselect id="serviceRelease" name="serviceRelease.id" value="${serviceReleaseFeedbackDealt.serviceRelease.id}" labelName="serviceRelease.name" labelValue="${serviceReleaseFeedbackDealt.serviceRelease.name}" 
 				title="服务名称" url="/service/serviceRelease/treeData?type=1" cssClass="input-small" allowClear="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>	
 				
@@ -46,8 +61,8 @@
 		<div class="control-group">
 			<label class="control-label">服务企业：</label>
 			<div class="controls" id="companydiv">
-				<sys:treeselect id="company" name="company.id" value="${serviceReleaseFeedback.company.id}" labelName="company.name" labelValue="${serviceReleaseFeedback.company.name}" 
-				title="公司" url="/service/serviceReleaseFeedback/treeDatabyRename" cssClass="input-small" allowClear="true"/>
+				<sys:treeselect id="company" name="company.id" value="${serviceReleaseFeedbackDealt.company.id}" labelName="company.name" labelValue="${serviceReleaseFeedbackDealt.company.name}" 
+				title="公司" url="/service/serviceReleaseFeedback/treeDatabyRename?type=1" queryParam="serviceReleaseId" cssClass="input-small" allowClear="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>					

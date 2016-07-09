@@ -25,6 +25,7 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
 import com.thinkgem.jeesite.modules.service.entity.ServiceRelease;
 import com.thinkgem.jeesite.modules.service.entity.ServiceReleaseFeedback;
 import com.thinkgem.jeesite.modules.service.service.ServiceReleaseFeedbackService;
@@ -91,10 +92,9 @@ public class ServiceReleaseFeedbackController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "treeDatabyRename")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String re_name, HttpServletResponse response) {
-		System.out.print("-------------------"+re_name);
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String type, String param, HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<ServiceReleaseFeedback> list = serviceReleaseFeedbackService.findListbyRename(re_name);
+		List<ServiceReleaseFeedback> list = serviceReleaseFeedbackService.findListbyRename(param);
 		for (int i=0; i<list.size(); i++){
 			ServiceReleaseFeedback e = list.get(i);
 			Map<String, Object> map = Maps.newHashMap();
@@ -104,6 +104,33 @@ public class ServiceReleaseFeedbackController extends BaseController {
 		}
 		
 		return mapList;
+	}
+	
+	
+	@ResponseBody
+	@RequiresPermissions("service:serviceRelease:edit")
+	@RequestMapping(value = "getContentAndCompanyView")
+	public Map<String, Object> getContentAndCompanyView(String releaseId,String companyId) {
+		Map<String, Object> map = Maps.newHashMap();
+		if (StringUtils.isNotBlank(releaseId)&&StringUtils.isNotBlank(companyId)) {
+			ServiceReleaseFeedback se = new ServiceReleaseFeedback();
+			CompanyInfo company=new CompanyInfo();
+			ServiceRelease serviceRelease=new ServiceRelease();
+			company.setId(companyId);
+			serviceRelease.setId(releaseId);
+			se.setCompany(company);
+			se.setServiceRelease(serviceRelease);
+			List<ServiceReleaseFeedback> sebs=serviceReleaseFeedbackService.findList(se);
+			if(sebs.size()>0)
+			{		
+				map.put("content", sebs.get(0).getServiceRelease().getContent());
+				map.put("view", sebs.get(0).getContent());
+				
+				return map;
+			}
+			return map;
+		}
+		return map;
 	}
 
 }
