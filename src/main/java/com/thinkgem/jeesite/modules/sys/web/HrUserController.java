@@ -93,7 +93,8 @@ public class HrUserController extends BaseController {
 			return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 		}
 		// 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
-		user.setCompany(new CompanyInfo(request.getParameter("company.id")));
+		user.getCompany().setId(request.getParameter("company.id"));
+		user.getCompany().setName(request.getParameter("company.name"));
 		//user.setOffice(new Office(request.getParameter("office.id")));人事专员不用部门
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(user.getNewPassword())) {

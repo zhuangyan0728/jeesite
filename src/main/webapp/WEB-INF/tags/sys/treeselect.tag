@@ -5,6 +5,7 @@
 <%@ attribute name="value" type="java.lang.String" required="true" description="隐藏域值（ID）"%>
 <%@ attribute name="labelName" type="java.lang.String" required="true" description="输入框名称（Name）"%>
 <%@ attribute name="labelValue" type="java.lang.String" required="true" description="输入框值（Name）"%>
+<%@ attribute name="queryParam" type="java.lang.String" required="false" description="url查询参数 填写参数的控件ID"%>
 <%@ attribute name="title" type="java.lang.String" required="true" description="选择框标题"%>
 <%@ attribute name="url" type="java.lang.String" required="true" description="树结构数据地址"%>
 <%@ attribute name="checked" type="java.lang.Boolean" required="false" description="是否显示复选框，如果不需要返回父节点，请设置notAllowSelectParent为true"%>
@@ -24,6 +25,7 @@
 <%@ attribute name="dataMsgRequired" type="java.lang.String" required="false" description=""%>
 <div class="input-append">
 	<input id="${id}Id" name="${name}" class="${cssClass}" type="hidden" value="${value}"/>
+	<!--  <input id="${id}selectParam" name="${id}selectParam" class="${cssClass}" type="hidden" value="${selectParam}"/>-->-->
 	<input id="${id}Name" name="${labelName}" ${allowInput?'':'readonly="readonly"'} type="text" value="${labelValue}" data-msg-required="${dataMsgRequired}"
 		class="${cssClass}" style="${cssStyle}"/><a id="${id}Button" href="javascript:" class="btn ${disabled} ${hideBtn ? 'hide' : ''}" style="${smallBtn?'padding:4px 2px;':''}">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;
 </div>
@@ -33,8 +35,12 @@
 		if ($("#${id}Button").hasClass("disabled")){
 			return true;
 		}
+		var param=$("#${queryParam}").val();
+		if(param !='' && param !=undefined && param !=null){
+			param = "&param="+param;
+		}
 		// 正常打开	
-		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}")+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}", "选择${title}", 300, 420, {
+		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}"+param)+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}", "选择${title}", 300, 420, {
 			ajaxData:{selectIds: $("#${id}Id").val()},buttons:{"确定":"ok", ${allowClear?"\"清除\":\"clear\", ":""}"关闭":true}, submit:function(v, h, f){
 				if (v=="ok"){
 					var tree = h.find("iframe")[0].contentWindow.tree;//h.find("iframe").contents();

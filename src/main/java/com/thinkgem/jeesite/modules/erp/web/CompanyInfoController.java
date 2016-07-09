@@ -89,9 +89,12 @@ public class CompanyInfoController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String typeId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String type, String param, HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
 		CompanyInfo companyInfo = new CompanyInfo() ;
+		if(StringUtils.isNotBlank(param)){
+			companyInfo.setName(param);
+		}
 		List<CompanyInfo> list = companyInfoService.findList(companyInfo);
 		for (int i=0; i<list.size(); i++){
 			CompanyInfo e = list.get(i);
@@ -102,5 +105,22 @@ public class CompanyInfoController extends BaseController {
 		}
 		return mapList;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "checkCompanyName")
+	public String checkCompanyName(String companyname,String name) {
+		if (companyname == companyname){
+			return "true";
+		}
+		System.out.print(name);
+		
+		
+		if (name == companyname){
+			return "true";
+		}
+		return "false";
+	}
 
 }
+
+	

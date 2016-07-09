@@ -48,7 +48,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-	<!-- 	<div class="control-group">
+	<%-- 	<div class="control-group">
 			<label class="control-label">归属部门:</label>
 			<div class="controls">
                 <sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
@@ -61,7 +61,7 @@
 				<form:input path="no" htmlEscape="false" maxlength="50" class="required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-		</div> -->
+		</div> --%>
 		<div class="control-group">
 			<label class="control-label">姓名:</label>
 			<div class="controls">

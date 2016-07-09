@@ -8,6 +8,13 @@
 		$(document).ready(function() {
 			//$("#name").focus();
 			$("#inputForm").validate({
+				rules: {
+					name: {remote: "${ctx}/erp/companyInfo/checkCompanyName?companyname=" + encodeURIComponent('${companyInfo.name}')}
+				},
+				messages: {
+					name: {remote: "用户登录名已存在"},
+					confirmNewPassword: {equalTo: "输入与上面相同的密码"}
+				},
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
 					form.submit();
