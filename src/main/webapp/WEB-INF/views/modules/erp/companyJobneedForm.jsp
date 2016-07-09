@@ -42,19 +42,27 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">归属公司22:</label>
+			<div class="controls">
+                <sys:treeselect id="company22" name="company.id" value="${companyJobneed.company.id}" labelName="company.name22" labelValue="${companyJobneed.company.name}"
+					selectParam="companyName"	title="公司222" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" />
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">人才分类：</label>
 			<div class="controls">
-				<form:select path="sort" class="input-xlarge ">
+				<form:select path="sort" class="input-xlarge required">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('talent_sort')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-					<span class="help-inline"><font color="red">*</font> </span>
 				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">岗位要求：</label>
 			<div class="controls">
-				<form:input path="jobskill" htmlEscape="false" maxlength="200"class="input-xlarge"/>
+				<form:input path="jobskill" htmlEscape="false" maxlength="200"  class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -78,11 +86,12 @@
 		<div class="control-group">
 			<label class="control-label">学历要求：</label>
 			<div class="controls">
-				<form:select path="educationneed" class="input-xlarge ">
+				<form:select path="educationneed" class="input-xlarge required">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('education_need')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
 					<span class="help-inline"><font color="red">*</font> </span>
 				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
