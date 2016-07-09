@@ -36,8 +36,11 @@
 			return true;
 		}
 		var param=$("#${queryParam}").val();
+ 
 		if(param !='' && param !=undefined && param !=null){
 			param = "&param="+param;
+		}else{
+			param ='';
 		}
 		// 正常打开	
 		top.$.jBox.open("iframe:${ctx}/tag/treeselect?url="+encodeURIComponent("${url}"+param)+"&module=${module}&checked=${checked}&extId=${extId}&isAll=${isAll}", "选择${title}", 300, 420, {

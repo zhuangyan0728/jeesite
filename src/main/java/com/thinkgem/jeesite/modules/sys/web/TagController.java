@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,11 +25,16 @@ public class TagController extends BaseController {
 	
 	/**
 	 * 树结构选择标签（treeselect.tag）
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequiresPermissions("user")
 	@RequestMapping(value = "treeselect")
-	public String treeselect(HttpServletRequest request, Model model) {
-		model.addAttribute("url", request.getParameter("url")); 	// 树结构数据URL
+	public String treeselect(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
+		String url = request.getParameter("url");
+		if(url.indexOf("param") >0){
+			url =url.substring(0,url.indexOf("param")+6)+ java.net.URLEncoder.encode(url.substring(url.indexOf("param")+6));
+		}
+		model.addAttribute("url", url); 	// 树结构数据URL
 		model.addAttribute("extId", request.getParameter("extId")); // 排除的编号ID
 		model.addAttribute("checked", request.getParameter("checked")); // 是否可复选
 		model.addAttribute("selectIds", request.getParameter("selectIds")); // 指定默认选中的ID

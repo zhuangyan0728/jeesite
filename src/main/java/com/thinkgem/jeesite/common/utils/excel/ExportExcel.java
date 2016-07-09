@@ -325,6 +325,8 @@ public class ExportExcel {
 	public Cell addCell(Row row, int column, Object val, int align, Class<?> fieldType){
 		Cell cell = row.createCell(column);
 		CellStyle style = styles.get("data"+(align>=1&&align<=3?align:""));
+		CellStyle stylecopy =  wb.createCellStyle();
+		stylecopy.cloneStyleFrom(style);
 		try {
 			if (val == null){
 				cell.setCellValue("");
@@ -338,10 +340,11 @@ public class ExportExcel {
 				cell.setCellValue((Double) val);
 			} else if (val instanceof Float) {
 				cell.setCellValue((Float) val);
-			} else if (val instanceof Date) {
+			} else if (val instanceof Date) {	 
 				DataFormat format = wb.createDataFormat();
-	            style.setDataFormat(format.getFormat("yyyy-MM-dd"));
+				stylecopy.setDataFormat(format.getFormat("yyyy-MM-dd HH:mi:ss"));
 				cell.setCellValue((Date) val);
+				cell.setCellStyle(stylecopy);
 			} else {
 				if (fieldType != Class.class){
 					cell.setCellValue((String)fieldType.getMethod("setValue", Object.class).invoke(null, val));
@@ -354,7 +357,7 @@ public class ExportExcel {
 			log.info("Set cell value ["+row.getRowNum()+","+column+"] error: " + ex.toString());
 			cell.setCellValue(val.toString());
 		}
-		cell.setCellStyle(style);
+		cell.setCellStyle(stylecopy);
 		return cell;
 	}
 
