@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.erp.dao.JobneedFeedbackDao">
+    
+	<sql id="jobneedFeedbackColumns">
+		a.id AS "id",
+		a.joobneedid AS "joobneed.id",
+		CONCAT(ci.NAME," 人数:",c.jobquantity," 发布时间: ",date_format(c.publisTime,'%Y-%m-%d') )   AS "joobneed.remarks",
+		a.feedbacktype AS "feedbacktype",
+		a.feedbacktime AS "feedbacktime",
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="jobneedFeedbackJoins">
+		left join company_jobneed c on c.id = a.joobneedid
+		left join company_info ci on ci.id = c.companyID 
+	</sql>
+    
+	<select id="get" resultType="JobneedFeedback">
+		SELECT 
+			<include refid="jobneedFeedbackColumns"/>
+		FROM jobneed_feedback a
+		<include refid="jobneedFeedbackJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="JobneedFeedback">
+		SELECT 
+			<include refid="jobneedFeedbackColumns"/>
+		FROM jobneed_feedback a
+		<include refid="jobneedFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="joobneed != null and joobneed.id != null and joobneed.id != ''">
+				AND a.joobneedid = #{joobneed.id}
+			</if>
+			<if test="feedbacktype != null and feedbacktype != ''">
+				AND a.feedbacktype = #{feedbacktype}
+			</if>
+			<if test="beginFeedbacktime != null and endFeedbacktime != null and beginFeedbacktime != '' and endFeedbacktime != ''">
+				AND a.feedbacktime BETWEEN #{beginFeedbacktime} AND #{endFeedbacktime}
+			</if>
+			<if test="createDate != null and createDate != ''">
+				AND a.create_date = #{createDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="JobneedFeedback">
+		SELECT 
+			<include refid="jobneedFeedbackColumns"/>
+		FROM jobneed_feedback a
+		<include refid="jobneedFeedbackJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO jobneed_feedback(
+			id,
+			joobneedid,
+			feedbacktype,
+			feedbacktime,
+			remarks,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{joobneed.id},
+			#{feedbacktype},
+			#{feedbacktime},
+			#{remarks},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE jobneed_feedback SET 	
+			joobneedid = #{joobneed.id},
+			feedbacktype = #{feedbacktype},
+			feedbacktime = #{feedbacktime},
+			remarks = #{remarks},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE jobneed_feedback SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

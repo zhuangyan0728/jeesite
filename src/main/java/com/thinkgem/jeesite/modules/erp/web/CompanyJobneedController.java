@@ -3,6 +3,10 @@
  */
 package com.thinkgem.jeesite.modules.erp.web;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,14 +18,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
 import com.thinkgem.jeesite.modules.erp.entity.CompanyJobneed;
 import com.thinkgem.jeesite.modules.erp.service.CompanyJobneedService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
@@ -105,4 +113,24 @@ public class CompanyJobneedController extends BaseController {
 		}
 		return "redirect:" + adminPath + "/erp/companyJobneed/list?repage";
     }
+	
+	@ResponseBody
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String type, String param, HttpServletResponse response) {
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+		CompanyJobneed companyJobneed = new CompanyJobneed();
+		if(StringUtils.isNotBlank(param)){
+			companyJobneed.setId(param);
+		}
+		List<CompanyJobneed> list = companyJobneedService.findList(companyJobneed);
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy年MM月dd日 " );
+		for (int i=0; i<list.size(); i++){
+			CompanyJobneed e = list.get(i);
+			Map<String, Object> map = Maps.newHashMap();
+			map.put("id", e.getId());
+			map.put("name", e.getCompanyName() +" 人数："+e.getJobquantity().toString()+ "   发布时间："+sdf.format(e.getPublistime()));
+			mapList.add(map);
+		}
+		return mapList;
+	}
 }
