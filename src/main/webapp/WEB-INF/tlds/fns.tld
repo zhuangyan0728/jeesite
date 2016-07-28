@@ -57,6 +57,22 @@
   </function>
   
   <function>
+    <description>获取政府回复企业关于通知的疑问</description>
+    <name>getNotifyRecordBack</name>
+    <function-class>com.thinkgem.jeesite.modules.oa.web.OaNotifyRecordBackController</function-class>
+    <function-signature>java.lang.Object getNotifyRecordBack(java.lang.String)</function-signature>
+    <example>${fns:getNotifyRecordBack(nr_id)}</example>  
+  </function>
+  
+  <function>
+    <description>获取政府通知发起人的用户ID</description>
+    <name>getNotifyRecordFrom</name>
+    <function-class>com.thinkgem.jeesite.modules.oa.web.OaNotifyRecordBackController</function-class>
+    <function-signature>java.lang.Object getNotifyRecordFrom(java.lang.String)</function-signature>
+    <example>${fns:getNotifyRecordFrom(rid)}</example>  
+  </function>
+  
+  <function>
     <description>根据编码获取用户对象</description>
     <name>getUserById</name>
     <function-class>com.thinkgem.jeesite.modules.sys.utils.UserUtils</function-class>

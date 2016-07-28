@@ -3,13 +3,17 @@
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
-import com.thinkgem.jeesite.modules.oa.entity.hr_users1;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotify;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
+import com.thinkgem.jeesite.modules.oa.dao.OaNotifyDao;
 import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
 
 /**
@@ -19,35 +23,29 @@ import com.thinkgem.jeesite.modules.oa.dao.OaNotifyRecordDao;
  */
 @Service
 @Transactional(readOnly = true)
-public class OaNotifyService extends CrudService<OaNotifyRecordDao,hr_users1> {
+public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 
 	@Autowired
 	private OaNotifyRecordDao oaNotifyRecordDao;
 
-	/**
-	 * 获取人事专员记录
-	 * @param uid
-	 * @return
-	 */
-	/*public hr_users get(hr_users hr_users) {
-		hr_users entity = oaNotifyRecordDao.get(hr_users);
+	public OaNotify get(String id) {
+		OaNotify entity = dao.get(id);
 		return entity;
 	}
-	*/
-	/**
-	 * 获取人事专员记录
-	 * @param uid
-	 * @return
-	 *//*
-	public hr_users getById(hr_users hr_users) {
-		//hr_users.setOaNotifyRecordList(oaNotifyRecordDao.findList(new OaNotifyRecord(hr_users)));
-		hr_users=get(String.valueOf(hr_users.getUid()));
-		return hr_users;
-	}*/
 	
-	public Page<hr_users1> find(Page<hr_users1> page, hr_users1 hr_users) {
-		hr_users.setPage(page);
-		page.setList(oaNotifyRecordDao.findList(hr_users));
+	/**
+	 * 获取通知发送记录
+	 * @param oaNotify
+	 * @return
+	 */
+	public OaNotify getRecordList(OaNotify oaNotify) {
+		oaNotify.setOaNotifyRecordList(oaNotifyRecordDao.findList(new OaNotifyRecord(oaNotify)));
+		return oaNotify;
+	}
+	
+	public Page<OaNotify> find(Page<OaNotify> page, OaNotify oaNotify) {
+		oaNotify.setPage(page);
+		page.setList(dao.findList(oaNotify));
 		return page;
 	}
 	
@@ -56,30 +54,31 @@ public class OaNotifyService extends CrudService<OaNotifyRecordDao,hr_users1> {
 	 * @param oaNotify
 	 * @return
 	 */
-	/*public Long findCount(OaNotify oaNotify) {
-		return oaNotifyRecordDao.findCount(oaNotify);
-	}*/
+	public Long findCount(OaNotify oaNotify) {
+		return dao.findCount(oaNotify);
+	}
 	
 	@Transactional(readOnly = false)
-	public void save(hr_users1 hr_users) {
-		super.save(hr_users);
+	public void save(OaNotify oaNotify) {
+		super.save(oaNotify);
 		
-		/*// 更新发送接受人记录
+		// 更新发送接受人记录
 		oaNotifyRecordDao.deleteByOaNotifyId(oaNotify.getId());
 		if (oaNotify.getOaNotifyRecordList().size() > 0){
 			oaNotifyRecordDao.insertAll(oaNotify.getOaNotifyRecordList());
-		}*/
+		}
 	}
 	
 	/**
 	 * 更新阅读状态
 	 */
-	/*@Transactional(readOnly = false)
+	@Transactional(readOnly = false)
 	public void updateReadFlag(OaNotify oaNotify) {
 		OaNotifyRecord oaNotifyRecord = new OaNotifyRecord(oaNotify);
 		oaNotifyRecord.setUser(oaNotifyRecord.getCurrentUser());
 		oaNotifyRecord.setReadDate(new Date());
 		oaNotifyRecord.setReadFlag("1");
 		oaNotifyRecordDao.update(oaNotifyRecord);
-	}*/
+	}
+	
 }
