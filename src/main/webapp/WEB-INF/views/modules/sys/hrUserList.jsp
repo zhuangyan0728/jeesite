@@ -49,8 +49,7 @@
 		<ul class="ul-form">
 			<li><label>归属公司：</label><sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" 
 				title="公司" url="/erp/companyInfo/treeData?type=1" cssClass="input-small" allowClear="true"/></li>
-			<li><label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/></li>
-		 
+			<!--  <li><label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/></li>-->		 
 		
 			<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
@@ -60,15 +59,17 @@
 		</ul>
 	</form:form>
 	<sys:message content="${message}"/>
+	<%!  int lineNum=1;%> 
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属公司</th><th class="sort-column login_name">登录名</th><th class="sort-column name">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th width="2%">序号</th><th>公司名称</th><th class="sort-column login_name">登入名</th><th class="sort-column name">姓名</th><th>职务</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user">
 			<tr>
+				<td><%=lineNum%><%lineNum++;%></td>
 				<td>${user.company.name}</td>
 				<td><a href="${ctx}/sys/hrUser/form?id=${user.id}">${user.loginName}</a></td>
 				<td>${user.name}</td>
-				<td>${user.phone}</td>
+				<td>${user.remarks}</td>
 				<td>${user.mobile}</td><%--
 				<td>${user.roleNames}</td> --%>
 				<shiro:hasPermission name="sys:user:edit"><td>
@@ -78,6 +79,7 @@
 			</tr>
 		</c:forEach>
 		</tbody>
+		<%lineNum=1;%>
 	</table>
 	<div class="pagination">${page}</div>
 </body>

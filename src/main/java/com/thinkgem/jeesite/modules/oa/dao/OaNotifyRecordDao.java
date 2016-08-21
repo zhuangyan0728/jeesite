@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.jeesite.modules.oa.entity.hr_users1;
+import com.thinkgem.jeesite.modules.oa.entity.OaNotifyRecord;
 
 /**
  * 通知通告记录DAO接口
@@ -15,14 +15,14 @@ import com.thinkgem.jeesite.modules.oa.entity.hr_users1;
  * @version 2014-05-16
  */
 @MyBatisDao
-public interface OaNotifyRecordDao extends CrudDao<hr_users1> {
+public interface OaNotifyRecordDao extends CrudDao<OaNotifyRecord> {
 
 	/**
 	 * 插入通知记录
 	 * @param oaNotifyRecordList
 	 * @return
 	 */
-	public int insertAll(List<hr_users1> hrusersList);
+	public int insertAll(List<OaNotifyRecord> oaNotifyRecordList);
 	
 	/**
 	 * 根据通知ID删除通知记录
@@ -30,12 +30,5 @@ public interface OaNotifyRecordDao extends CrudDao<hr_users1> {
 	 * @return
 	 */
 	public int deleteByOaNotifyId(String oaNotifyId);
-	
-	/**
-	 * 获取人事专员记录
-	 * @param nickname
-	 * @return
-	 *//*
-	public hr_users getById(int Uid);*/
 	
 }

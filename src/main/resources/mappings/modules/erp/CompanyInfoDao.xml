@@ -10,6 +10,11 @@
 		a.registeraddress AS "registeraddress",
 		a.contactaddress AS "contactaddress",
 		a.legalperson AS "legalperson",
+		a.sic AS "sic",
+	    a.capacaty as "capacaty",
+        a.empCnt as "empCnt",
+	    a.gauge as "gauge",
+	    a.highTech as "highTech",
 		a.phone AS "phone",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
@@ -44,6 +49,8 @@
 					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
 			</if>
 		</where>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -81,6 +88,11 @@
 			registeraddress,
 			contactaddress,
 			legalperson,
+			sic,
+	        capacaty,
+            empCnt,
+	        gauge,
+	        highTech,
 			phone,
 			remarks,
 			create_by,
@@ -96,6 +108,11 @@
 			#{registeraddress},
 			#{contactaddress},
 			#{legalperson},
+			#{sic},
+	        #{capacaty},
+            #{empCnt},
+	        #{gauge},
+	        #{highTech},
 			#{phone},
 			#{remarks},
 			#{createBy.id},
@@ -114,6 +131,11 @@
 			registeraddress = #{registeraddress},
 			contactaddress = #{contactaddress},
 			legalperson = #{legalperson},
+			sic = #{sic},
+	        capacaty = #{capacaty},
+            empCnt = #{empCnt},
+	        gauge = #{gauge},
+	        highTech = #{highTech},
 			phone = #{phone},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},

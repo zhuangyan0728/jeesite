@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.erp.dao.EmployeecountDao">
+    
+	<sql id="employeecountColumns">
+		a.id AS "id",
+		a.companyid AS "company.id",
+		c.name AS "company.name",
+		a.time AS "time",
+		a.totalsum AS "totalsum",
+		a.doctor AS "doctor",
+		a.master AS "master",
+		a.bachelordegree AS "bachelordegree",
+		a.collegeeducation AS "collegeeducation",
+		a.seniorhighschool AS "seniorhighschool",
+		a.middleschool AS "middleschool",
+		a.seniortechnicaltitles AS "seniortechnicaltitles",
+		a.middletechnicaltitles AS "middletechnicaltitles",
+		a.seniortechnician AS "seniortechnician",
+		a.technician AS "technician",
+		a.seniorengineer AS "seniorengineer",
+		a.middleengineer AS "middleengineer",
+		a.status AS "status",
+		a.reward AS "reward",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="employeecountJoins">
+		left join company_info  c on c.id = a.companyid
+	</sql>
+    
+	<select id="get" resultType="Employeecount">
+		SELECT 
+			<include refid="employeecountColumns"/>
+		FROM employeecount a
+		<include refid="employeecountJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Employeecount">
+		SELECT 
+			<include refid="employeecountColumns"/>
+		FROM employeecount a
+		<include refid="employeecountJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="company != null and company.id != null and company.id != ''">
+				AND a.companyid = #{company.id}
+			</if>
+			<if test="beginTime != null and endTime != null and beginTime != '' and endTime != ''">
+				AND a.time BETWEEN #{beginTime} AND #{endTime}
+			</if>
+			<if test="totalsum != null and totalsum != ''">
+				AND a.totalsum = #{totalsum}
+			</if>
+		</where>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Employeecount">
+		SELECT 
+			<include refid="employeecountColumns"/>
+		FROM employeecount a
+		<include refid="employeecountJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO employeecount(
+			id,
+			companyid,
+			time,
+			totalsum,
+			doctor,
+			master,
+			bachelordegree,
+			collegeeducation,
+			seniorhighschool,
+			middleschool,
+			seniortechnicaltitles,
+			middletechnicaltitles,
+			seniortechnician,
+			technician,
+			seniorengineer,
+			middleengineer,
+			status,
+			reward,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			del_flag
+		) VALUES (
+			#{id},
+			#{company.id},
+			#{time},
+			#{totalsum},
+			#{doctor},
+			#{master},
+			#{bachelordegree},
+			#{collegeeducation},
+			#{seniorhighschool},
+			#{middleschool},
+			#{seniortechnicaltitles},
+			#{middletechnicaltitles},
+			#{seniortechnician},
+			#{technician},
+			#{seniorengineer},
+			#{middleengineer},
+			0,
+			#{reward},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE employeecount SET 	
+			companyid = #{company.id},
+			time = #{time},
+			totalsum = #{totalsum},
+			doctor = #{doctor},
+			master = #{master},
+			bachelordegree = #{bachelordegree},
+			collegeeducation = #{collegeeducation},
+			seniorhighschool = #{seniorhighschool},
+			middleschool = #{middleschool},
+			seniortechnicaltitles = #{seniortechnicaltitles},
+			middletechnicaltitles = #{middletechnicaltitles},
+			seniortechnician = #{seniortechnician},
+			technician = #{technician},
+			seniorengineer = #{seniorengineer},
+			middleengineer = #{middleengineer},
+			status = #{status},
+			reward = #{reward},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE employeecount SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

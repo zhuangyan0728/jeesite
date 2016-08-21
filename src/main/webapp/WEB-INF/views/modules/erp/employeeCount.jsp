@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>单表管理</title>
+	<title>人员结构表</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -17,7 +17,6 @@
 	</script>
 </head>
 <body>
-	<iframe id="reportFrame" width="1700" height="1000" src="http://localhost:8075/WebReport/ReportServer?reportlet=employeeCount.cpt"></iframe> 
-
+	<iframe id="reportFrame" width="1700" height="1000" src="http://222.69.93.84:8082/WebReport/ReportServer?reportlet=employeeCount.cpt"></iframe> 
 </body>
 </html>

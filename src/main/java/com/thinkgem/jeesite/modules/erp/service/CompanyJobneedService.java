@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.erp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -27,10 +28,14 @@ public class CompanyJobneedService extends CrudService<CompanyJobneedDao, Compan
 	}
 	
 	public List<CompanyJobneed> findList(CompanyJobneed companyJobneed) {
+		companyJobneed.getSqlMap().put("dsf", companyDataScopeFilter(companyJobneed.getCurrentUser(), "cid", ""));
+		
 		return super.findList(companyJobneed);
 	}
 	
 	public Page<CompanyJobneed> findPage(Page<CompanyJobneed> page, CompanyJobneed companyJobneed) {
+		page.setOrderBy("publistime");
+		companyJobneed.getSqlMap().put("dsf", companyDataScopeFilter(companyJobneed.getCurrentUser(), "cid", ""));
 		return super.findPage(page, companyJobneed);
 	}
 	

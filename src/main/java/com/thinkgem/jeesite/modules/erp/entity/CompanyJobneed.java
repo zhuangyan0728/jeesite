@@ -6,9 +6,11 @@ package com.thinkgem.jeesite.modules.erp.entity;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
@@ -27,9 +29,14 @@ public class CompanyJobneed extends DataEntity<CompanyJobneed> {
 	private Integer jobquantity;		// 人才数量
 	private Integer educationneed;		// 学历要求
 	private Integer workedyear;		// 工作年限
+	private Integer auditType;		// 审核类型 0未审核 1已审核 2已拒绝
+	private String auditReason;		// 审核原因
+	private Date auditTime;		// 审核时间
+
 	private Date publistime;		// 发布时间
 	private Date jointime;		// 最晚到岗时间
 	private String majorneed;		// 专业要求
+	private List<CompanyJobneedRecommend> companyJobneedRecommendList = Lists.newArrayList();		// 子表列表
 	
 	public CompanyJobneed() {
 		super();
@@ -142,4 +149,34 @@ public class CompanyJobneed extends DataEntity<CompanyJobneed> {
 		this.majorneed = majorneed;
 	}
 	
+	public Integer getAuditType() {
+		return auditType;
+	}
+
+	public void setAuditType(Integer auditType) {
+		this.auditType = auditType;
+	}
+
+	public String getAuditReason() {
+		return auditReason;
+	}
+
+	public void setAuditReason(String auditReason) {
+		this.auditReason = auditReason;
+	}
+
+	public Date getAuditTime() {
+		return auditTime;
+	}
+
+	public void setAuditTime(Date auditTime) {
+		this.auditTime = auditTime;
+	}
+	public List<CompanyJobneedRecommend> getCompanyJobneedRecommendList() {
+		return companyJobneedRecommendList;
+	}
+
+	public void setCompanyJobneedRecommendList(List<CompanyJobneedRecommend> companyJobneedRecommendList) {
+		this.companyJobneedRecommendList = companyJobneedRecommendList;
+	}
 }

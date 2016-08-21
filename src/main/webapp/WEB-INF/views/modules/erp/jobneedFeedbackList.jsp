@@ -54,9 +54,11 @@
 		</ul>
 	</form:form>
 	<sys:message content="${message}"/>
+	<%!  int lineNum=1;%> 
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th width="2%">序号</th>
 				<th>招聘需求</th>
 				<th>回馈类型</th>
 				<th>回馈时间</th>
@@ -68,6 +70,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="jobneedFeedback">
 			<tr>
+				<td><%=lineNum%><%lineNum++;%></td>
 				<td><a href="${ctx}/erp/jobneedFeedback/form?id=${jobneedFeedback.id}">
 					${jobneedFeedback.joobneed.remarks}
 				</a></td>
@@ -90,6 +93,7 @@
 			</tr>
 		</c:forEach>
 		</tbody>
+		<%lineNum=1;%>
 	</table>
 	<div class="pagination">${page}</div>
 </body>

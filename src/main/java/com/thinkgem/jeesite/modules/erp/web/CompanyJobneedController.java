@@ -4,12 +4,14 @@
 package com.thinkgem.jeesite.modules.erp.web;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,25 +64,51 @@ public class CompanyJobneedController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(CompanyJobneed companyJobneed, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<CompanyJobneed> page = companyJobneedService.findPage(new Page<CompanyJobneed>(request, response), companyJobneed); 
+	
 		model.addAttribute("page", page);
 		return "modules/erp/companyJobneedList";
 	}
 
 	@RequiresPermissions("erp:companyJobneed:view")
 	@RequestMapping(value = "form")
-	public String form(CompanyJobneed companyJobneed, Model model) {
+	public String form(CompanyJobneed companyJobneed, Model model,HttpServletRequest request) {
 		model.addAttribute("companyJobneed", companyJobneed);
+		if(null != request && null != request.getParameter("auditModle") && request.getParameter("auditModle").toString().equals("true")){
+			model.addAttribute("auditModle", "true");
+		}
+		if(null != request && null != request.getAttribute("auditModle") && request.getAttribute("auditModle").toString().equals("true")){
+			model.addAttribute("auditModle", "true");
+		}
+	
 		return "modules/erp/companyJobneedForm";
 	}
-
-	@RequiresPermissions("erp:companyJobneed:edit")
+	
+	
+	@RequiresPermissions(value={"erp:companyJobneed:edit","erp:companyJobneed:audit"},logical=Logical.OR)
 	@RequestMapping(value = "save")
-	public String save(CompanyJobneed companyJobneed, Model model, RedirectAttributes redirectAttributes) {
+	public String save(CompanyJobneed companyJobneed, Model model, RedirectAttributes redirectAttributes,HttpServletRequest request) {
+		 
 		if (!beanValidator(model, companyJobneed)){
-			return form(companyJobneed, model);
+			return form(companyJobneed, model,request);
+		}
+		if(null != companyJobneed.getAuditType() && companyJobneed.getAuditType() == 2){
+			request.setAttribute("auditModle", "true");
+			if(StringUtils.isBlank(companyJobneed.getAuditReason())){
+				addMessage(redirectAttributes, "审核企业招聘失败，拒绝必须输入原因");
+				return form(companyJobneed, model,request);
+			}
+		}
+		if(null !=companyJobneed.getAuditType() && companyJobneed.getAuditType() == 1){
+			companyJobneed.setAuditReason("");
+		}
+		if(null !=companyJobneed.getAuditType() && companyJobneed.getAuditType() != 0){
+			companyJobneed.setAuditTime(new Date());
 		}
 		companyJobneedService.save(companyJobneed);
+		 
 		addMessage(redirectAttributes, "保存企业招聘需求成功");
+	
+		
 		return "redirect:"+Global.getAdminPath()+"/erp/companyJobneed/?repage";
 	}
 	
