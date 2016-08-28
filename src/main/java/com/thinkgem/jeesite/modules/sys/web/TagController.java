@@ -27,7 +27,7 @@ public class TagController extends BaseController {
 	 * 树结构选择标签（treeselect.tag）
 	 * @throws UnsupportedEncodingException 
 	 */
-	@RequiresPermissions("user")
+	//@RequiresPermissions("user")
 	@RequestMapping(value = "treeselect")
 	public String treeselect(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
 		String url = request.getParameter("url");
