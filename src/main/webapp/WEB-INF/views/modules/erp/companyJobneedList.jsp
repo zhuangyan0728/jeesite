@@ -25,6 +25,16 @@
 		function audit(){
 			$.jBox.alert("招聘信息审核通过","提示");
 		}
+		function viewDetial(cid){ 
+			//alert("sss");
+			var openUrl = "http://222.69.93.84:8082/WebReport/ReportServer?reportlet=employeeDetails.cpt&cid=" + cid;//弹出窗口的url
+			var iWidth=1000; //弹出窗口的宽度;
+			var iHeight=600; //弹出窗口的高度;
+			var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+			var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+			window.open(openUrl,"_blank","height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft); 
+			 
+		} 
 	</script>
 </head>
 <body>
@@ -135,9 +145,9 @@
 	    				<fmt:formatDate value="${companyJobneed.auditTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	  				</c:if>
 				</td>
-				<td><a href="${ctx}/erp/companyJobneed/form?id=${companyJobneed.id}">
+				<td> <a href="javascript:void(0);" onclick ="viewDetial('${companyJobneed.id}')">
 					查看
-				</a> </td>
+				</a></td>
 				<shiro:hasPermission name="erp:companyJobneed:audit">
 					<td><a href="${ctx}/erp/companyJobneed/form?&auditModle=true&id=${companyJobneed.id}">审核</a></shiro:hasPermission></td>
 				<shiro:hasPermission name="erp:companyJobneed:edit"><td>

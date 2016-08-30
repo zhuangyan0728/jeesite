@@ -57,7 +57,9 @@
 			<sys:validateCode name="validateCode" inputCssStyle="margin-bottom:0;"/>
 		</div></c:if><%--
 		<label for="mobile" title="手机登录"><input type="checkbox" id="mobileLogin" name="mobileLogin" ${mobileLogin ? 'checked' : ''}/></label> --%>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<input class="btn btn-large btn-primary" type="submit" value="登 录"/>&nbsp;&nbsp;
+		<input id="btnRegister" class="btn btn-large  " type="button" value="注 册" onclick="javascript:window.location.href='${ctx}/register'"/>
 		<label for="rememberMe" title="下次不需要再登录"><input type="checkbox" id="rememberMe" name="rememberMe" ${rememberMe ? 'checked' : ''}/> 记住我（公共场所慎用）</label>
 		<div id="themeSwitch" class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">${fns:getDictLabel(cookie.theme.value,'theme','默认主题')}<b class="caret"></b></a>

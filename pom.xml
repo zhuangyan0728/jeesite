@@ -473,6 +473,11 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>${commons-fileupload.version}</version>
 		</dependency>
+		
+		 <!-- https://mvnrepository.com/artifact/javax.xml.stream/stax-api -->
+ 
+		 
+		 
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
@@ -554,7 +559,7 @@
 			<version>1.1.1</version>
 		</dependency>
 		
-		<!-- poi office -->
+		 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
@@ -570,6 +575,7 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
+		 
 		
 		<!-- image util -->
 		<dependency>
@@ -917,6 +923,8 @@
 				<artifactId>maven-install-plugin</artifactId>
 				<version>2.4</version>
 			</plugin>
+			
+			
 			
 			<!-- clean插件 -->
 			<plugin>

@@ -27,6 +27,22 @@
 			$("#searchForm").submit();
 	    	return false;
 	    }
+		
+		function modifyLoginFlag(id,flag){
+			$.ajax({
+				url: "${ctx}/sys/hrUser/modifyFlag?id=" +id+"&flag="+flag,
+				type: 'POST',
+				dataType: 'json',
+				cache: false,
+				async: true,
+			}).done(function(data) {
+				location.reload();
+			}).fail(function(jqXHR, textStatus){
+				location.reload();
+				console.log('Get HighLights failure: ', textStatus, jqXHR);
+			});
+			
+		}
 	</script>
 </head>
 <body>
@@ -61,7 +77,16 @@
 	<sys:message content="${message}"/>
 	<%!  int lineNum=1;%> 
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th width="2%">序号</th><th>公司名称</th><th class="sort-column login_name">登入名</th><th class="sort-column name">姓名</th><th>职务</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead>
+			<tr>
+			<th width="2%">序号</th>
+			<th>公司名称</th>
+			<th class="sort-column login_name">登入名</th>
+			<th class="sort-column name">姓名</th>
+			<th>职务</th>
+			<th>手机</th>
+			<th>账号状态</th>
+			<%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user">
 			<tr>
@@ -72,7 +97,21 @@
 				<td>${user.remarks}</td>
 				<td>${user.mobile}</td><%--
 				<td>${user.roleNames}</td> --%>
-				<shiro:hasPermission name="sys:user:edit"><td>
+				<td width="5%">
+					<c:if test="${user.loginFlag eq 1}">
+						启用
+					</c:if>
+					<c:if test="${user.loginFlag eq 0}">
+						停用
+					</c:if>
+				</td>
+				<shiro:hasPermission name="sys:hruser:edit"><td width="10%">
+					<c:if test="${user.loginFlag eq 1}">
+						<a href="javascript:modifyLoginFlag('${user.id}','0')">停用</a>
+					</c:if>
+					<c:if test="${user.loginFlag eq '0'}">
+						<a href="javascript:modifyLoginFlag('${user.id}','1')">启用</a>
+					</c:if>
     				<a href="${ctx}/sys/hrUser/form?id=${user.id}">修改</a>
 					<a href="${ctx}/sys/hrUser/delete?id=${user.id}" onclick="return confirmx('确认要删除该用户吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

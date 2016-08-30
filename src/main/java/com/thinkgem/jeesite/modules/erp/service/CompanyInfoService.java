@@ -31,6 +31,12 @@ public class CompanyInfoService extends CrudService<CompanyInfoDao, CompanyInfo>
 		return super.findList(companyInfo);
 	}
 	
+	
+	public List<CompanyInfo> findListNoFilter(CompanyInfo companyInfo) {
+		//companyInfo.getSqlMap().put("dsf", companyDataScopeFilter(companyInfo.getCurrentUser(), "id", ""));
+		return super.findList(companyInfo);
+	}
+	
 	public Page<CompanyInfo> findPage(Page<CompanyInfo> page, CompanyInfo companyInfo) {
 		companyInfo.getSqlMap().put("dsf", companyDataScopeFilter(companyInfo.getCurrentUser(), "id", ""));
 		return super.findPage(page, companyInfo);
