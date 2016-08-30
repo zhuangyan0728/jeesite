@@ -17,7 +17,7 @@
 				/static/** = anon
 				/userfiles/** = anon
 				${adminPath}/tag/treeselect = anon
- 				${adminPath}/register = anon
+				${adminPath}/register = anon
 				${adminPath}/register/** = anon
 				${adminPath}/cas = cas
 				${adminPath}/login = authc

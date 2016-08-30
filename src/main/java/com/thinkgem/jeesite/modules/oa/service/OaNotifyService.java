@@ -80,4 +80,5 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		oaNotifyRecord.setReadFlag("1");
 		oaNotifyRecordDao.update(oaNotifyRecord);
 	}
+	
 }
