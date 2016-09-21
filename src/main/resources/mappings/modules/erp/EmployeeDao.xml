@@ -82,7 +82,15 @@
 			<if test="education != null and education != ''">
 				AND a.education = #{education}
 			</if>
+			<if test="worktitle != null and worktitle != ''">
+				AND a.worktitle = #{worktitle}
+			</if>
+			<if test="reward != null and reward != ''">
+				AND a.reward = #{reward}
+			</if>
 		</where>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}

@@ -7,6 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
+			
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -99,7 +100,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">职称：</label>
+			<label class="control-label">技术职称：</label>
 			<div class="controls">
 				<form:input path="worktitle" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -115,9 +116,13 @@
 		<div class="control-group">
 			<label class="control-label">薪酬状况：</label>
 			<div class="controls">
-				<form:input path="salary" htmlEscape="false" maxlength="50" class="input-xlarge required"/>
+				<form:select path="salary" class="input-xlarge required">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('salary_grade')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
+			 
 		</div>
 		<div class="control-group">
 			<label class="control-label">人才分类：</label>
@@ -198,7 +203,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">奖励情况：</label>
+			<label class="control-label">奖项荣誉：</label>
 			<div class="controls">
 				<form:textarea path="reward" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge "/>
 			</div>

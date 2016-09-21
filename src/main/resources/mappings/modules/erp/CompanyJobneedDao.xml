@@ -15,6 +15,9 @@
 		a.publistime AS "publistime",
 		a.jointime AS "jointime",
 		a.majorneed AS "majorneed",
+		a.auditType as "auditType",
+		a.auditReason as "auditReason",
+		a.auditTime as "auditTime",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -58,6 +61,8 @@
 				AND a.publistime = #{publistime}
 			</if>
 		</where>
+		<!-- 数据范围过滤 -->
+		${sqlMap.dsf}
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -137,6 +142,9 @@
 			workedyear = #{workedyear},
 			publistime = #{publistime},
 			jointime = #{jointime},
+			auditType = #{auditType},
+			auditReason = #{auditReason},
+			auditTime=  #{auditTime},
 			majorneed = #{majorneed},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},

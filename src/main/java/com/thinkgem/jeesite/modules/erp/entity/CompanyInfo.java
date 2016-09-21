@@ -22,6 +22,11 @@ public class CompanyInfo extends DataEntity<CompanyInfo> {
 	private String contactaddress;		// 联系地址
 	private String legalperson;		// 法人
 	private String phone;		// 联系电话
+	private Integer sic; //产业类型
+	private Integer capacaty; //企业产值
+	private Integer empCnt; //企业人数
+	private Integer gauge; //是否归上
+	private Integer highTech;//是否高新企业
 	
 	public CompanyInfo() {
 		super();
@@ -93,5 +98,46 @@ public class CompanyInfo extends DataEntity<CompanyInfo> {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public Integer getSic() {
+		return sic;
+	}
+
+	public void setSic(Integer sic) {
+		this.sic = sic;
+	}
+
+	public Integer getCapacaty() {
+		return capacaty;
+	}
+
+	public void setCapacaty(Integer capacaty) {
+		this.capacaty = capacaty;
+	}
+
+	public Integer getEmpCnt() {
+		return empCnt;
+	}
+
+	public void setEmpCnt(Integer empCnt) {
+		this.empCnt = empCnt;
+	}
+
+	public Integer getGauge() {
+		return gauge;
+	}
+
+	public void setGauge(Integer gauge) {
+		this.gauge = gauge;
+	}
+
+	public Integer getHighTech() {
+		return highTech;
+	}
+
+	public void setHighTech(Integer highTech) {
+		this.highTech = highTech;
+	}
+
 	
 }

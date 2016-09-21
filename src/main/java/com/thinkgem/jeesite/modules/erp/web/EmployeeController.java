@@ -12,15 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.modules.erp.entity.Employee;
 import com.thinkgem.jeesite.modules.erp.service.EmployeeService;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 企业人才管理Controller
@@ -79,5 +83,21 @@ public class EmployeeController extends BaseController {
 		addMessage(redirectAttributes, "删除企业人才信息成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
 	}
+	
+	@RequiresPermissions("erp:employee:view")
+    @RequestMapping(value = "export", method=RequestMethod.POST)
+    public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+            String fileName = "用户数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx";
+            Employee employee = new Employee();
+            Page<Employee> page = employeeService.findPage(new Page<Employee>(request, response), employee); 
+            new ExportExcel("人员信息数据", Employee.class).setDataList(page.getList()).write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出人员信息失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/erp/employee/list?repage";
+    }
+
 
 }

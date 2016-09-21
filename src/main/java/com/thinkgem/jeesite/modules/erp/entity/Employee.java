@@ -8,8 +8,10 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 
 /**
  * 企业人才信息管理Entity
@@ -59,7 +61,13 @@ public class Employee extends DataEntity<Employee> {
 		this.company = company;
 	}
 	
+	@ExcelField(title="归属公司", align=2, sort=10)
+	public String getCompanyName() {
+		return company.getName();
+	}
+	
 	@Length(min=1, max=200, message="姓名长度必须介于 1 和 200 之间")
+	@ExcelField(title="姓名", align=2, sort=10)
 	public String getName() {
 		return name;
 	}
@@ -69,6 +77,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="性别不能为空")
+	@ExcelField(title="性别", align=2, sort=30, dictType="sex")
 	public Integer getSex() {
 		return sex;
 	}
@@ -78,6 +87,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@Length(min=1, max=100, message="身份证号长度必须介于 1 和 100 之间")
+	@ExcelField(title="身份证号", align=2, sort=10)
 	public String getIdentityno() {
 		return identityno;
 	}
@@ -87,6 +97,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@Length(min=1, max=200, message="籍贯长度必须介于 1 和 200 之间")
+	@ExcelField(title="籍贯", align=2, sort=10)
 	public String getNativeplace() {
 		return nativeplace;
 	}
@@ -96,6 +107,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="居住地不能为空")
+	@ExcelField(title="性别", align=2, sort=30, dictType="residence_place")
 	public Integer getResidenceplace() {
 		return residenceplace;
 	}
@@ -105,6 +117,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="婚姻状况不能为空")
+	@ExcelField(title="性别", align=2, sort=30, dictType="marital_status")
 	public Integer getMartitalstatus() {
 		return martitalstatus;
 	}
@@ -114,6 +127,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="学历不能为空")
+	@ExcelField(title="性别", align=2, sort=30, dictType="education")
 	public Integer getEducation() {
 		return education;
 	}
@@ -123,6 +137,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@Length(min=1, max=100, message="职称长度必须介于 1 和 100 之间")
+	@ExcelField(title="职称", align=2, sort=30)
 	public String getWorktitle() {
 		return worktitle;
 	}
@@ -132,6 +147,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@Length(min=1, max=100, message="职务长度必须介于 1 和 100 之间")
+	@ExcelField(title="职务", align=2, sort=30)
 	public String getWorkpositon() {
 		return workpositon;
 	}
@@ -141,6 +157,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@Length(min=1, max=50, message="薪酬状况长度必须介于 1 和 50 之间")
+	@ExcelField(title="薪酬", align=2, sort=30)
 	public String getSalary() {
 		return salary;
 	}
@@ -150,6 +167,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="人才分类不能为空")
+	@ExcelField(title="人才分类", align=2, sort=30,dictType="talent_sort")
 	public Integer getSort() {
 		return sort;
 	}
@@ -159,6 +177,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="是否关键岗位不能为空")
+	@ExcelField(title="人才分类", align=2, sort=30,dictType="yes_no")
 	public Integer getIfkey() {
 		return ifkey;
 	}
@@ -168,6 +187,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="是否申领居住证不能为空")
+	@ExcelField(title="是否申领居住证", align=2, sort=30,dictType="yes_no")
 	public Integer getIfresidencecard() {
 		return ifresidencecard;
 	}
@@ -176,7 +196,7 @@ public class Employee extends DataEntity<Employee> {
 		this.ifresidencecard = ifresidencecard;
 	}
 	
-	@Length(min=0, max=100, message="居住证号码长度必须介于 0 和 100 之间")
+	//@Length(min=0, max=100, message="居住证号码长度必须介于 0 和 100 之间")
 	public String getResidenceno() {
 		return residenceno;
 	}
@@ -194,7 +214,7 @@ public class Employee extends DataEntity<Employee> {
 		this.validity = validity;
 	}
 	
-	@Length(min=0, max=10, message="居住积分长度必须介于 0 和 10 之间")
+	//@Length(min=0, max=10, message="居住积分长度必须介于 0 和 10 之间")
 	public String getIntegral() {
 		return integral;
 	}
@@ -203,7 +223,7 @@ public class Employee extends DataEntity<Employee> {
 		this.integral = integral;
 	}
 	
-	@Length(min=0, max=10, message="虚拟打分长度必须介于 0 和 10 之间")
+	//@Length(min=0, max=10, message="虚拟打分长度必须介于 0 和 10 之间")
 	public String getVirtualintegral() {
 		return virtualintegral;
 	}
@@ -212,7 +232,7 @@ public class Employee extends DataEntity<Employee> {
 		this.virtualintegral = virtualintegral;
 	}
 	
-	@Length(min=0, max=500, message="子女入学情况长度必须介于 0 和 500 之间")
+	//@Length(min=0, max=500, message="子女入学情况长度必须介于 0 和 500 之间")
 	public String getSituation() {
 		return situation;
 	}
@@ -222,6 +242,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="是否离职不能为空")
+	@ExcelField(title="是否离职", align=2, sort=30,dictType="yes_no")
 	public Integer getIfquite() {
 		return ifquite;
 	}
@@ -240,6 +261,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	@NotNull(message="是否高端人才不能为空")
+	@ExcelField(title="是否高端人才", align=2, sort=30,dictType="yes_no")
 	public Integer getIfsenioremp() {
 		return ifsenioremp;
 	}
@@ -248,7 +270,7 @@ public class Employee extends DataEntity<Employee> {
 		this.ifsenioremp = ifsenioremp;
 	}
 	
-	@Length(min=0, max=200, message="奖励情况长度必须介于 0 和 200 之间")
+	@Length( max=200, message="奖励情况长度必须介于 0 和 200 之间")
 	public String getReward() {
 		return reward;
 	}

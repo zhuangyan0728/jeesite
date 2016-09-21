@@ -47,6 +47,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		 
 		<div class="control-group">
 			<label class="control-label">组织机构代码：</label>
 			<div class="controls">
@@ -82,6 +83,50 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">企业产值：</label>
+			<div class="controls">
+				<form:input path="capacaty" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">企业人数：</label>
+			<div class="controls">
+				<form:input path="empCnt" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">产业类型：</label>
+			<div class="controls">
+				<form:select path="sic" class="input-xlarge required">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('sic_type')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				</form:select>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+						
+		<div class="control-group">
+			<label class="control-label">是否归上：</label>
+			<div class="controls">
+				<form:radiobuttons path="gauge" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+	
+		<div class="control-group">
+			<label class="control-label">是否高新企业：</label>
+			<div class="controls">
+				<form:radiobuttons path="highTech" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		
 		<div class="control-group">
 			<label class="control-label">联系电话：</label>
 			<div class="controls">
@@ -90,7 +135,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">备注信息：</label>
+			<label class="control-label">企业简介：</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="500" class="input-xxlarge "/>
 			</div>

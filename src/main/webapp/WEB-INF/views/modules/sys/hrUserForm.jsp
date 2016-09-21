@@ -99,15 +99,21 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">电话:</label>
+			<label class="control-label">职务:</label>
 			<div class="controls">
-				<form:input path="phone" htmlEscape="false" maxlength="100"/>
+				<form:input path="remarks" htmlEscape="false" maxlength="100"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">手机:</label>
 			<div class="controls">
 				<form:input path="mobile" htmlEscape="false" maxlength="100"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">固定电话:</label>
+			<div class="controls">
+				<form:input path="phone" htmlEscape="false" maxlength="100"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -136,12 +142,13 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div> -->
+		<!-- 
 		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
 			</div>
-		</div>
+		</div>-->
 		<c:if test="${not empty user.id}">
 			<div class="control-group">
 				<label class="control-label">创建时间:</label>

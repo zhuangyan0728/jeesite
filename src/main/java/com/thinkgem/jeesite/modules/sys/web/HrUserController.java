@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -128,6 +129,26 @@ public class HrUserController extends BaseController {
 		
 		return "redirect:" + adminPath + "/sys/hrUser/list?repage";
 	}
+	
+	@ResponseBody
+	@RequiresPermissions("sys:hruser:edit")
+	@RequestMapping(value = "modifyFlag")
+	public String modifyFlag(User user, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			String id = request.getParameter("id").toString();
+			String flag = request.getParameter("flag").toString();
+			User u =  systemService.getUser(id);
+			u.setLoginFlag(flag);
+			systemService.saveUser(u);
+		
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "保存用户失败！失败信息："+e.getMessage());
+			return "fail";
+		}
+		return  "success";
+	}
+	
+	
 	
 	@RequiresPermissions("sys:hruser:edit")
 	@RequestMapping(value = "delete")

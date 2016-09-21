@@ -27,10 +27,12 @@ public class EmployeeService extends CrudService<EmployeeDao, Employee> {
 	}
 	
 	public List<Employee> findList(Employee employee) {
+		employee.getSqlMap().put("dsf", companyDataScopeFilter(employee.getCurrentUser(), "cid", ""));
 		return super.findList(employee);
 	}
 	
 	public Page<Employee> findPage(Page<Employee> page, Employee employee) {
+		employee.getSqlMap().put("dsf", companyDataScopeFilter(employee.getCurrentUser(), "cid", ""));
 		return super.findPage(page, employee);
 	}
 	
