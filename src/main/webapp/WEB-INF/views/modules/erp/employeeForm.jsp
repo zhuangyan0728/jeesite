@@ -181,9 +181,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">是否离职：</label>
+			<label class="control-label">是否在职：</label>
 			<div class="controls">
-				<form:radiobuttons path="ifquite" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+				<form:radiobuttons path="ifquite" items="${fns:getDictList('if_quite')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
