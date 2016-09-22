@@ -46,6 +46,7 @@ public class EmployeeController extends BaseController {
 		}
 		if (entity == null){
 			entity = new Employee();
+			entity.setIntegral("0");
 		}
 		return entity;
 	}

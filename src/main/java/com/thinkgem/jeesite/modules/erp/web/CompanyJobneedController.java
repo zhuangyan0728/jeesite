@@ -56,6 +56,7 @@ public class CompanyJobneedController extends BaseController {
 		}
 		if (entity == null){
 			entity = new CompanyJobneed();
+			entity.setPublistime(new Date());
 		}
 		return entity;
 	}

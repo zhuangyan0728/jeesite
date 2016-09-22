@@ -112,7 +112,7 @@
 		</div>
 						
 		<div class="control-group">
-			<label class="control-label">是否归上：</label>
+			<label class="control-label">是否规上：</label>
 			<div class="controls">
 				<form:radiobuttons path="gauge" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
 				<span class="help-inline"><font color="red">*</font> </span>

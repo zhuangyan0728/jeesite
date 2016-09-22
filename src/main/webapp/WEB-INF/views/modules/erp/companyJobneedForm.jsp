@@ -79,7 +79,7 @@
 				<tr>
 					<td>
 						<div class="control-group">
-							<label class="control-label">岗位要求：</label>
+							<label class="control-label">岗位名称：</label>
 							<shiro:hasPermission name="erp:companyJobneed:edit"> 
 								<div class="controls">
 									<form:input path="jobskill" htmlEscape="false" maxlength="200"  class="input-xlarge required" />
@@ -110,7 +110,7 @@
 				<tr>
 					<td>
 						<div class="control-group">
-							<label class="control-label">人才数量：</label>
+							<label class="control-label">招聘人数：</label>
 							<shiro:hasPermission name="erp:companyJobneed:edit"> 
 								<div class="controls">
 									<form:input path="jobquantity" htmlEscape="false" maxlength="50" class="input-xlarge required" />
@@ -200,7 +200,7 @@
 				<tr>
 					<td>
 						<div class="control-group">
-							<label class="control-label">外语能力：</label>
+							<label class="control-label">外语要求：</label>
 							<shiro:hasPermission name="erp:companyJobneed:edit"> 
 								<div class="controls">
 									<form:input path="majorneed" htmlEscape="false" maxlength="100" class="input-xlarge required"  value="四级"  />
@@ -236,7 +236,7 @@
 				<tr>
 					<td>
 						<div class="control-group">
-							<label class="control-label">计算机能力：</label>
+							<label class="control-label">计算机要求：</label>
 							<shiro:hasPermission name="erp:companyJobneed:edit"> 
 								<div class="controls">
 									<form:input path="majorneed" htmlEscape="false" maxlength="100" class="input-xlarge required" value="国家三级"/>
@@ -272,7 +272,24 @@
 				<tr>
 					<td colspan=2 align="left">
 						<div class="control-group">
-							<label class="control-label">职位描述：</label>
+							<label class="control-label">职位描述/岗位要求：</label>
+							<shiro:hasPermission name="erp:companyJobneed:edit"> 
+								<div class="controls"   >
+									<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="5000" class="input-xxlarge "  style="width:750px" />
+								</div>
+							</shiro:hasPermission>
+							<shiro:lacksPermission name="erp:companyJobneed:edit"> 
+								<div class="controls" >
+									<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="5000" class="input-xxlarge " readonly="true"    style="width:750px"/>
+								</div>
+							</shiro:lacksPermission>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan=2 align="left">
+						<div class="control-group">
+							<label class="control-label">福利待遇：</label>
 							<shiro:hasPermission name="erp:companyJobneed:edit"> 
 								<div class="controls"   >
 									<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="5000" class="input-xxlarge "  style="width:750px" />

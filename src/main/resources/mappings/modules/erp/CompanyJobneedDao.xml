@@ -58,7 +58,7 @@
 				AND a.workedyear = #{workedyear}
 			</if>
 			<if test="publistime != null and publistime != ''">
-				AND a.publistime = #{publistime}
+				<![CDATA[ AND a.publistime <= #{publistime} ]]> 
 			</if>
 		</where>
 		<!-- 数据范围过滤 -->
