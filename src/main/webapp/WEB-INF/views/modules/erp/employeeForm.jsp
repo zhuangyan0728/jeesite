@@ -59,7 +59,7 @@
 			<label class="control-label">归属公司:</label>
 			<div class="controls">
 				<c:choose>
-					<c:when test="${fns:getUser().admin}">
+					<c:when test="${empty fns:getUser().company.id}">
 						<sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
 							title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
 					</c:when>

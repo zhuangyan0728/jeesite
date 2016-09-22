@@ -99,7 +99,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<c:if test="${fns:getUser().admin}">
+		<shiro:hasPermission name="erp:companyJobneed:audit">
 			<div class="control-group">
 				<label class="control-label">产业类型：</label>
 				<div class="controls">
@@ -126,7 +126,7 @@
 					<span class="help-inline"><font color="red">*</font> </span>
 				</div>
 			</div>
-		</c:if>
+		</shiro:hasPermission>
 		<div class="control-group">
 			<label class="control-label">联系电话：</label>
 			<div class="controls">

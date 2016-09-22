@@ -38,8 +38,25 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>公司名称：</label><sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}" 
-				title="公司" url="/erp/companyInfo/treeData?type=1" cssClass="input-small" allowClear="true"/>
+			<li><label>公司名称：</label>
+				<c:choose>
+					<c:when test="${empty fns:getUser().company.id}">
+						<sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+							title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${not empty employee.company.id}">						   
+							<div style="display: none;">
+						      <sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+							   title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>    
+							 </div> 
+							 <label >${employee.company.name}</label>  
+						 </c:if>
+						 <c:if test="${empty employee.company.id}">						   
+							<label>${fns:getUser().company.name}</label>
+						 </c:if>						 
+					</c:otherwise>
+				</c:choose>
 			</li>
 			<li><label>姓名：</label>
 				<form:input path="name" htmlEscape="false" maxlength="200" class="input-medium"/>

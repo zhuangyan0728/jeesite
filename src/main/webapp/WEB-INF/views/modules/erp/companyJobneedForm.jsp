@@ -55,11 +55,26 @@
 					<td>
 						<div class="control-group">
 							<label class="control-label">归属公司:</label>
-							<div class="controls">
-				                <sys:treeselect id="company" name="company.id" value="${companyJobneed.company.id}" labelName="company.name" labelValue="${companyJobneed.company.name}"
-									title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" 
-									 />
-								<span class="help-inline"><font color="red">*</font> </span>
+							 <div class="controls">
+								<c:choose>
+									<c:when test="${empty fns:getUser().company.id}">
+										<sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+											title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
+									</c:when>
+									<c:otherwise>
+										<c:if test="${not empty employee.company.id}">						   
+											<div style="display: none;">
+										      <sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+											   title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>    
+											 </div> 
+											 <label>${employee.company.name}</label>  
+										 </c:if>
+										 <c:if test="${empty employee.company.id}">						   
+											<label>${fns:getUser().company.name}</label>
+										 </c:if>						 
+									</c:otherwise>
+								</c:choose>
+								<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 							</div>
 						</div>
 					</td>
