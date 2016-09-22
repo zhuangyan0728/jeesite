@@ -99,34 +99,34 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		<c:if test="${fns:getUser().admin}">
+			<div class="control-group">
+				<label class="control-label">产业类型：</label>
+				<div class="controls">
+					<form:select path="sic" class="input-xlarge required">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('sic_type')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+					</form:select>
+					<span class="help-inline"><font color="red">*</font> </span>
+				</div>
+			</div>
+							
+			<div class="control-group">
+				<label class="control-label">是否规上：</label>
+				<div class="controls">
+					<form:radiobuttons path="gauge" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+					<span class="help-inline"><font color="red">*</font> </span>
+				</div>
+			</div>
 		
-		<div class="control-group">
-			<label class="control-label">产业类型：</label>
-			<div class="controls">
-				<form:select path="sic" class="input-xlarge required">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('sic_type')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
+			<div class="control-group">
+				<label class="control-label">是否高新企业：</label>
+				<div class="controls">
+					<form:radiobuttons path="highTech" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
+					<span class="help-inline"><font color="red">*</font> </span>
+				</div>
 			</div>
-		</div>
-						
-		<div class="control-group">
-			<label class="control-label">是否规上：</label>
-			<div class="controls">
-				<form:radiobuttons path="gauge" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-	
-		<div class="control-group">
-			<label class="control-label">是否高新企业：</label>
-			<div class="controls">
-				<form:radiobuttons path="highTech" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		
+		</c:if>
 		<div class="control-group">
 			<label class="control-label">联系电话：</label>
 			<div class="controls">

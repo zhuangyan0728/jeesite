@@ -24,6 +24,27 @@
 				}
 			});
 		});
+		
+		//解析身份证上的出生日期以及性别
+		function getData(){
+		   if(!/^\d{6}((?:19|20)((?:\d{2}(?:0[13578]|1[02])(?:0[1-9]|[12]\d|3[01]))|(?:\d{2}(?:0[13456789]|1[012])(?:0[1-9]|[12]\d|30))|(?:\d{2}02(?:0[1-9]|1\d|2[0-8]))|(?:(?:0[48]|[2468][048]|[13579][26])0229)))\d{2}(\d)[xX\d]$/.test($("#identityno").val())){
+		      $.jBox.alert("身份证号非法","提示");
+		      return;
+		   }
+		   var bd =(RegExp.$1).substr(0,4)+'-'+(RegExp.$1).substr(4,2)+'-'+(RegExp.$1).substr(6,2);	
+		   $("#birthday").val(bd);
+		   
+		   var idno= $("#identityno").val();
+		   var last = idno[idno.length - 2];
+		   var sex="";
+		   if(last % 2 != 0){
+	             sex="男";
+	             $("#sex1").attr("checked","checked");
+	         }else{
+	             sex="女";
+	             $("#sex2").attr("checked","checked");
+	         }
+		}
 	</script>
 </head>
 <body>
@@ -37,15 +58,38 @@
 		<div class="control-group">
 			<label class="control-label">归属公司:</label>
 			<div class="controls">
-                <sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
-					title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"  cssClass="required" />
-				<span class="help-inline"><font color="red">*</font> </span>
+				<c:choose>
+					<c:when test="${fns:getUser().admin}">
+						<sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+							title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${not empty employee.company.id}">						   
+							<div style="display: none;">
+						      <sys:treeselect id="company" name="company.id" value="${employee.company.id}" labelName="company.name" labelValue="${employee.company.name}"
+							   title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>    
+							 </div> 
+							 <label>${employee.company.name}</label>  
+						 </c:if>
+						 <c:if test="${empty employee.company.id}">						   
+							<label>${fns:getUser().company.name}</label>
+						 </c:if>						 
+					</c:otherwise>
+				</c:choose>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">姓名：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>	
+		<div class="control-group">
+			<label class="control-label">身份证号：</label>
+			<div class="controls">
+				<form:input path="identityno" htmlEscape="false" maxlength="100" onblur="javascript:getData();" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -57,34 +101,33 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">身份证号：</label>
+			<label class="control-label">出生日期：</label>
 			<div class="controls">
-				<form:input path="identityno" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="birthday" htmlEscape="false" maxlength="200" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">籍贯：</label>
 			<div class="controls">
-				<form:input path="nativeplace" htmlEscape="false" maxlength="200" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="nativeplace" htmlEscape="false" maxlength="200" class="input-xlarge"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">居住地：</label>
 			<div class="controls">
-				<form:select path="residenceplace" class="input-xlarge required">
+				<form:select path="residenceplace" class="input-xlarge">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('residence_place')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">婚姻状况：</label>
 			<div class="controls">
-				<form:radiobuttons path="martitalstatus" items="${fns:getDictList('marital_status')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:radiobuttons path="martitalstatus" items="${fns:getDictList('marital_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 			
 			
@@ -94,7 +137,7 @@
 			<div class="controls">
 				<form:select path="education" class="input-xlarge required">
 					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('education')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					<form:options items="${fns:getDictList('education')}" itemLabel="label" itemValue="value" htmlEscape="false" />
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -102,50 +145,50 @@
 		<div class="control-group">
 			<label class="control-label">技术职称：</label>
 			<div class="controls">
-				<form:input path="worktitle" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="worktitle" htmlEscape="false" maxlength="100" class="input-xlarge"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">职务：</label>
 			<div class="controls">
-				<form:input path="workpositon" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="workpositon" htmlEscape="false" maxlength="100" class="input-xlarge"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">薪酬状况：</label>
 			<div class="controls">
-				<form:select path="salary" class="input-xlarge required">
+				<form:select path="salary" class="input-xlarge">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('salary_grade')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 			 
 		</div>
 		<div class="control-group">
 			<label class="control-label">人才分类：</label>
 			<div class="controls">
-				<form:select path="sort" class="input-xlarge required">
+				<form:select path="sort" class="input-xlarge">
 					<form:option value="" label=""/>
 					<form:options items="${fns:getDictList('talent_sort')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">是否关键岗位：</label>
 			<div class="controls">
-				<form:radiobuttons path="ifkey" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:radiobuttons path="ifkey" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">是否申领居住证：</label>
 			<div class="controls">
-				<form:radiobuttons path="ifresidencecard" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:radiobuttons path="ifresidencecard" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
@@ -183,12 +226,12 @@
 		<div class="control-group">
 			<label class="control-label">是否在职：</label>
 			<div class="controls">
-				<form:radiobuttons path="ifquite" items="${fns:getDictList('if_quite')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:radiobuttons path="ifquite" items="${fns:getDictList('if_quite')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">离职时间：</label>
+			<label class="control-label">离职日期：</label>
 			<div class="controls">
 				<input name="qutietime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
 					value="<fmt:formatDate value="${employee.qutietime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -198,8 +241,8 @@
 		<div class="control-group">
 			<label class="control-label">是否高端人才：</label>
 			<div class="controls">
-				<form:radiobuttons path="ifsenioremp" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class="required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:radiobuttons path="ifsenioremp" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				<!-- <span class="help-inline"><font color="red">*</font> </span> -->
 			</div>
 		</div>
 		<div class="control-group">

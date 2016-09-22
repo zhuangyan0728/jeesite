@@ -159,7 +159,7 @@
 					</td>
 					<td>
 						<div class="control-group">
-							<label class="control-label">发布时间：</label>
+							<label class="control-label">发布日期：</label>
 							<div class="controls">
 								<input name="publistime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required "
 									value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
@@ -171,7 +171,7 @@
 				<tr>
 					<td>
 						<div class="control-group">
-							<label class="control-label">最晚到岗时间：</label>
+							<label class="control-label">最晚到岗日期：</label>
 							<div class="controls">
 								<input name="jointime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required "
 									value="<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
