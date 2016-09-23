@@ -81,10 +81,10 @@
 			<li><label>工作年限：</label>
 				<form:input path="workedyear" htmlEscape="false" maxlength="10" class="input-medium"/>
 			</li>
-			<li><label>发布时间：</label>
+			<li><label>发布日期：</label>
 				<input name="publistime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns">
 				<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
@@ -108,9 +108,9 @@
 				
 				<th width="20%">有效期起止</th>
 				 
-			   <th>发布时间</th>
+			   <th>发布日期</th>
 			   <th>审核状态</th> 
-			    <th>审核时间</th>
+			    <th>审核日期</th>
 			   <th>查看</th>
 			   <shiro:hasPermission name="erp:companyJobneed:audit"><th>操作</th></shiro:hasPermission>
 			   <shiro:hasPermission name="erp:companyJobneed:edit"><th>操作</th></shiro:hasPermission>
@@ -140,11 +140,11 @@
 				
 				
 				<td>
-					<fmt:formatDate value="${companyJobneed.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>     到<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${companyJobneed.updateDate}" pattern="yyyy-MM-dd"/>     到<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd"/>
 				</td>
 			 	
 				<td>
-					<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					<c:if test="${companyJobneed.auditType=='0'}"> 
@@ -159,7 +159,7 @@
 				</td>
 				<td>
 					<c:if test="${companyJobneed.auditTime != null && companyJobneed.auditTime !=''}"> 
-	    				<fmt:formatDate value="${companyJobneed.auditTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+	    				<fmt:formatDate value="${companyJobneed.auditTime}" pattern="yyyy-MM-dd"/>
 	  				</c:if>
 				</td>
 				<td> <a href="javascript:void(0);" onclick ="viewDetial('${companyJobneed.id}')">

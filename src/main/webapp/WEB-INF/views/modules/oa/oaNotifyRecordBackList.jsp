@@ -30,11 +30,11 @@
 			</li>
 			<li><label>时间：</label>
 				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${oaNotifyRecordBack.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${oaNotifyRecordBack.beginCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> - 
 				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${oaNotifyRecordBack.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${oaNotifyRecordBack.endCreateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -56,7 +56,7 @@
 					${oaNotifyRecordBack.remarks}
 				</a></td>
 				<td>
-					<fmt:formatDate value="${oaNotifyRecordBack.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${oaNotifyRecordBack.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="oa:oaNotifyRecordBack:edit"><td>
     				<a href="${ctx}/oa/oaNotifyRecordBack/form?id=${oaNotifyRecordBack.id}">修改</a>

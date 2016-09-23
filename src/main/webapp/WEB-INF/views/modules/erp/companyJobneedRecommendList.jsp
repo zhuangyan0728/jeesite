@@ -48,8 +48,8 @@
 			</li>
 			<li><label>发布时间：</label>
 				<input name="publistime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -92,13 +92,13 @@
 					${fns:getDictLabel(companyJobneed.educationneed, 'education_need', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${companyJobneed.remarks}
 				</td>
 				<td>
-					<fmt:formatDate value="${companyJobneed.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${companyJobneed.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="erp:companyJobneedRecommend:edit"><td>
     				<a href="${ctx}/erp/companyJobneedRecommend/form?id=${companyJobneed.id}">推荐人才      </a>

@@ -255,7 +255,7 @@
 									</c:if>								
 								</td>
 								<td>
-									<fmt:formatDate value="${oaNotifyRecord.readDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+									<fmt:formatDate value="${oaNotifyRecord.readDate}" pattern="yyyy-MM-dd"/>
 								</td>
 							</tr>
 						</c:forEach>

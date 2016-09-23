@@ -73,7 +73,7 @@
 		<div class="control-group">
 			<label class="control-label">留言时间:</label>
 			<div class="controls">
-				<fmt:formatDate value="${guestbook.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				<fmt:formatDate value="${guestbook.createDate}" pattern="yyyy-MM-dd "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -92,7 +92,7 @@
 			<div class="control-group">
 				<label class="control-label">回复时间:</label>
 				<div class="controls">
-					<fmt:formatDate value="${guestbook.reDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${guestbook.reDate}" pattern="yyyy-MM-dd"/>
 				</div>
 			</div>
 		</c:if>

@@ -101,7 +101,7 @@
 					${companyInfo.phone}
 				</td>	
 				<td>
-					<fmt:formatDate value="${companyInfo.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${companyInfo.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<!--  
 				<td>

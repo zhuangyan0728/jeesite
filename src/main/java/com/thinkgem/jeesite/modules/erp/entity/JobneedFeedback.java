@@ -49,7 +49,7 @@ public class JobneedFeedback extends DataEntity<JobneedFeedback> {
 		this.feedbacktype = feedbacktype;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="回馈时间不能为空")
 	public Date getFeedbacktime() {
 		return feedbacktime;

@@ -109,7 +109,7 @@ public class ServiceReleaseFeedbackDealt extends DataEntity<ServiceReleaseFeedba
 		this.remark = remark;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getServiceDate() {
 		return serviceDate;
 	}

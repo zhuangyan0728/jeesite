@@ -67,8 +67,8 @@
 					<td>${model.key}</td>
 					<td>${model.name}</td>
 					<td><b title='流程版本号'>V: ${model.version}</b></td>
-					<td><fmt:formatDate value="${model.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td><fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td><fmt:formatDate value="${model.createTime}" pattern="yyyy-MM-dd"/></td>
+					<td><fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-MM-dd"/></td>
 					<td>
 						<a href="${pageContext.request.contextPath}/act/rest/service/editor?id=${model.id}" target="_blank">编辑</a>
 						<a href="${ctx}/act/model/deploy?id=${model.id}" onclick="return confirmx('确认要部署该模型吗？', this.href)">部署</a>

@@ -123,20 +123,20 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">发布时间：</label>
+			<label class="control-label">发布日期：</label>
 			<div class="controls">
 				<input name="publistime" type="text"   disabled= "true" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${companyJobneed.publistime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">最晚到岗时间：</label>
+			<label class="control-label">最晚到岗日期：</label>
 			<div class="controls">
 				<input name="jointime" type="text"  disabled= "true" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${companyJobneed.jointime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -218,7 +218,7 @@
 							</td>
 							<td>
 								<input id="companyJobneedRecommendList{{idx}}_publistime" name="companyJobneedRecommendList[{{idx}}].publistime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-									value="{{row.publistime}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+									value="{{row.publistime}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 							</td>
 							<td>
 								<textarea id="companyJobneedRecommendList{{idx}}_remarks" name="companyJobneedRecommendList[{{idx}}].remarks" rows="4" maxlength="500" class="input-small ">{{row.remarks}}</textarea>

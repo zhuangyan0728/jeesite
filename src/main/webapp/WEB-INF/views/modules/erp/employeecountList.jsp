@@ -30,11 +30,11 @@
 			</li>
 			<li><label>填报时间：</label>
 				<input name="beginTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${employeecount.beginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${employeecount.beginTime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> - 
 				<input name="endTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${employeecount.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${employeecount.endTime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>总人数：</label>
 				<form:input path="totalsum" htmlEscape="false" maxlength="10" class="input-medium"/>
@@ -74,7 +74,7 @@
 					${employeecount.company.name}
 				 </td>
 				 <td> 
-					<fmt:formatDate value="${employeecount.time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${employeecount.time}" pattern="yyyy-MM-dd"/>
 				 </td>
 				<td> 
 					${employeecount.totalsum}
@@ -125,7 +125,7 @@
 				</td>
 		 
 				<td>
-					<fmt:formatDate value="${employeecount.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${employeecount.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="erp:employeecount:edit"><td>
 				 <c:if test="${employeecount.status=='0'}"> 

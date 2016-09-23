@@ -33,11 +33,11 @@
 			</li>
 			<li><label>更新时间：</label>
 				<input name="beginUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${serviceRelease.beginUpdateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
+					value="<fmt:formatDate value="${serviceRelease.beginUpdateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/> - 
 				<input name="endUpdateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${serviceRelease.endUpdateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${serviceRelease.endUpdateDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -63,7 +63,7 @@
 					${serviceRelease.remarks}
 				</td>
 				<td>
-					<fmt:formatDate value="${serviceRelease.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${serviceRelease.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="service:serviceRelease:edit"><td>
     				<a href="${ctx}/service/serviceRelease/form?id=${serviceRelease.id}">修改</a>
