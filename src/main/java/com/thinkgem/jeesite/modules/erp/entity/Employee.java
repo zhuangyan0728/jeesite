@@ -4,14 +4,19 @@
 package com.thinkgem.jeesite.modules.erp.entity;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
+import com.thinkgem.jeesite.modules.erp.service.CompanyInfoService;
+import com.thinkgem.jeesite.modules.erp.service.EmployeeService;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 企业人才信息管理Entity
@@ -19,6 +24,8 @@ import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
  * @version 2016-07-07
  */
 public class Employee extends DataEntity<Employee> {
+	@Autowired
+	private CompanyInfoService companyInfoService;
 	
 	private static final long serialVersionUID = 1L;
 	private CompanyInfo company;		// 所属公司
@@ -67,6 +74,13 @@ public class Employee extends DataEntity<Employee> {
 		return company.getName();
 	}
 	
+	//@ExcelField(title="归属公司", align=2, sort=10)
+	public void setCompanyName(String name) throws Exception {
+
+		this.company = UserUtils.getCompanyInfoList(name);
+		this.company.setName(name);
+	}
+	
 	@Length(min=1, max=200, message="姓名长度必须介于 1 和 200 之间")
 	@ExcelField(title="姓名", align=2, sort=10)
 	@NotNull(message="姓名不能为空")
@@ -110,7 +124,7 @@ public class Employee extends DataEntity<Employee> {
 	}
 	
 	/*@NotNull(message="居住地不能为空")*/
-	@ExcelField(title="性别", align=2, sort=30, dictType="residence_place")
+	@ExcelField(title="居住地", align=2, sort=30, dictType="residence_place")
 	public Integer getResidenceplace() {
 		return residenceplace;
 	}

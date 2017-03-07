@@ -172,7 +172,13 @@ public class OaNotifyRecordBackController extends BaseController {
 	public static OaNotifyRecordBack getNotifyRecordBack(String nr_id) {
 		OaNotifyRecordBack oaNotifyRecordBack=new OaNotifyRecordBack();
 		oaNotifyRecordBack.setNrId(nr_id);
-		List<OaNotifyRecordBack> sebs=oaNotifyRecordBackDao.findList(oaNotifyRecordBack);
+		List<OaNotifyRecordBack> sebs =null;
+		try{
+			 sebs=oaNotifyRecordBackDao.findList(oaNotifyRecordBack);
+		}catch(Exception ex){
+			System.out.print(ex.getMessage());
+		}
+		
 		if(sebs!=null && sebs.size()>0)
 		{
 			return sebs.get(0);

@@ -26,10 +26,31 @@
 			$("#searchForm").submit();
         	return false;
         }
+		
+		function printRoomApply(eid){ 
+			//alert("sss");
+			var openUrl = "http://222.69.93.84:8082/WebReport/ReportServer?reportlet=talentRoomApply.cpt&eid=" + eid;//弹出窗口的url
+			var iWidth=1000; //弹出窗口的宽度;
+			var iHeight=600; //弹出窗口的高度;
+			var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+			var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+			window.open(openUrl,"_blank","height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft); 
+			 
+		} 
+		
+		
+ 			
 	</script>
 </head>
 <body>
-    
+    <div id="importBox" class="hide">
+		<form id="importForm" action="${ctx}/erp/employee/import" method="post" enctype="multipart/form-data"
+			class="form-search" style="padding-left:20px;text-align:center;" onsubmit="loading('正在导入，请稍等...');"><br/>
+			<input id="uploadFile" name="file" type="file" style="width:330px"/><br/><br/>　　
+			<input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   导    入   "/>
+			<a href="${ctx}/erp/employee/import/template">下载模板</a>
+		</form>
+	</div>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/erp/employee/">企业人才信息列表</a></li>
 		<shiro:hasPermission name="erp:employee:edit"><li><a href="${ctx}/erp/employee/form">企业人才信息添加</a></li></shiro:hasPermission>
@@ -83,7 +104,9 @@
 			</li>
 			
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-			<input id="btnExport" class="btn btn-primary" type="button" value="导出"/></li>
+			<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
+			<input id="btnImport" class="btn btn-primary" type="button" value="导入"/>
+			</li>
 			
 			<li class="clearfix"></li>
 		</ul>
@@ -110,7 +133,7 @@
 				-->
 				<th>修改时间</th>
 				<th>查看</th>
-				
+				<th>打印</th>
 				<shiro:hasPermission name="erp:employee:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -160,6 +183,9 @@
 				</td>
 				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
 					查看
+				</a></td>
+				<td> <a href="javascript:void(0);" onclick ="printRoomApply('${employee.id}')">
+					租住申请打印
 				</a></td>
 				<shiro:hasPermission name="erp:employee:edit"><td>
     				<a href="${ctx}/erp/employee/form?id=${employee.id}">修改</a>

@@ -14,6 +14,8 @@ import org.apache.shiro.subject.Subject;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.CacheUtils;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.erp.dao.CompanyInfoDao;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -38,6 +40,7 @@ public class UserUtils {
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
 	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
 	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
+	private static CompanyInfoDao companyInfoDao = SpringContextHolder.getBean(CompanyInfoDao.class);
 
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
@@ -218,6 +221,21 @@ public class UserUtils {
 			putCache(CACHE_OFFICE_LIST, officeList);
 		}
 		return officeList;
+	}
+	
+	public static CompanyInfo getCompanyInfoList(String name) throws Exception{
+		@SuppressWarnings("unchecked")
+		CompanyInfo cparam = new CompanyInfo();
+		cparam.setName(name);
+		CompanyInfo cresut= new CompanyInfo();
+		List<CompanyInfo> result = companyInfoDao.findList(cparam);
+		if(result !=null && result.size()>0){
+			cresut= result.get(0);
+		}else{
+			throw new Exception(name + "不存在，请检查");
+		}
+		 
+		return cresut;
 	}
 
 	/**

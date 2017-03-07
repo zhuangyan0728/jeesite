@@ -50,6 +50,7 @@
 			$.get("${ctx}${url}${fn:indexOf(url,'?')==-1?'?':'&'}&extId=${extId}&isAll=${isAll}&module=${module}&t="
 					+ new Date().getTime(), function(zNodes){
 				// 初始化树结构
+			 
 				tree = $.fn.zTree.init($("#tree"), setting, zNodes);
 				
 				// 默认展开一级节点
