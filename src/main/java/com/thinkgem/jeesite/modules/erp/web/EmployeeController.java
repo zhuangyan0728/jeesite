@@ -147,7 +147,7 @@ public class EmployeeController extends BaseController {
 		return "redirect:" + adminPath + "/erp/employee/list?repage";
     }
 		
-	@RequiresPermissions("erp:employee:edit")
+	@RequiresPermissions("erp:employee:view")
     @RequestMapping(value = "import/template")
     public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {

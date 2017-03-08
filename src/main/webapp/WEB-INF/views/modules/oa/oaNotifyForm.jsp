@@ -208,6 +208,7 @@
 					<sys:ckfinder input="files" type="files" uploadPath="/oa/notify" selectMultiple="true" readonly="true" />
 				</div>
 			</div>
+			<shiro:hasPermission name="oa:oaNotify:edit">
 			<div class="control-group">
 				<label class="control-label">接受人：</label>
 				<div class="controls">
@@ -215,7 +216,7 @@
 						<thead>
 							<tr>
 								<th>接受人</th>
-								<th>接受部门</th>
+								<th>接受企业(部门)</th>
 								<th>阅读状态</th>
 								<th>阅读时间</th>
 							</tr>
@@ -226,7 +227,7 @@
 								<td>
 								   <input type="hidden" id="recordId${ status.index + 1}" value="${oaNotifyRecord.id}"/>
 								   <input type="hidden" id="useId${ status.index + 1}" value="${oaNotifyRecord.user.id}"/>
-									${oaNotifyRecord.user.name}
+									${oaNotifyRecord.user.name}(${oaNotifyRecord.user.phone})
 								</td>
 								<td>
 									${oaNotifyRecord.user.office.name}
@@ -264,6 +265,7 @@
 					已查阅：${oaNotify.readNum} &nbsp; 未查阅：${oaNotify.unReadNum} &nbsp; 总共：${oaNotify.readNum + oaNotify.unReadNum}
 				</div>
 			</div>
+			</shiro:hasPermission>
 		</c:if>
 		<div class="form-actions">
 			<c:if test="${oaNotify.status ne '1'}">

@@ -9,12 +9,15 @@
 		a.READ_FLAG AS "readFlag",
 		a.READ_DATE AS "readDate",
 		u.name AS "user.name",
-		o.name AS "user.office.name"
+		o.name AS "user.office.name",
+		u.phone as "user.phone"
 	</sql>
 	
 	<sql id="oaNotifyRecordJoins">
 		JOIN sys_user u ON u.id = a.user_id
-		JOIN sys_office o ON o.id = u.office_id
+		JOIN (select s.id ,s.name from sys_office s where s.del_flag = 0 
+ UNION all 
+ SELECT c.id, c.name from company_info c where c.del_flag = 0 )o ON (o.id = u.office_id or o.id =u.company_id)
 	</sql>
     
 	<select id="get" resultType="OaNotifyRecord">

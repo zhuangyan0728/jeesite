@@ -34,6 +34,8 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.erp.entity.CompanyInfo;
+import com.thinkgem.jeesite.modules.erp.service.CompanyInfoService;
 import com.thinkgem.jeesite.modules.sys.dao.UserDao;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
@@ -55,6 +57,8 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private CompanyInfoService companyInfoService;
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
@@ -362,10 +366,12 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "treeData")
 	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId, HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<User> list = systemService.findUserByOfficeId(officeId);
+		List<User> list = new ArrayList<User> ();
 		if(officeId.equals("hr1234")){
 			User user =new User();
-			list.addAll(userDao.findHrList(user));
+			list = userDao.findHrList(user);
+		}else{
+			list = systemService.findUserByOfficeId(officeId);
 		}
 		
 		for (int i=0; i<list.size(); i++){
@@ -373,7 +379,15 @@ public class UserController extends BaseController {
 			Map<String, Object> map = Maps.newHashMap();
 			map.put("id", "u_"+e.getId());
 			map.put("pId", officeId);
-			map.put("name", StringUtils.replace(e.getName(), " ", ""));
+			map.put("name", StringUtils.replace(e.getName(), " ", "") );
+			if(officeId.equals("hr1234")){
+				CompanyInfo companyInfo = companyInfoService.get(e.getCompany());
+				if(null != companyInfo){
+					String cName = companyInfo.getName();
+					map.put("name", StringUtils.replace(e.getName(), " ", "") +"(" + cName + ")" );
+				}
+			}
+			
 			mapList.add(map);
 		}
 		return mapList;
