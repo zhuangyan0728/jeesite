@@ -52,7 +52,7 @@
 					<td><a target="_blank" href="${pageContext.request.contextPath}/act/rest/diagram-viewer?processDefinitionId=${process.id}">${process.diagramResourceName}</a><%--
 						<a target="_blank" href="${ctx}/act/process/resource/read?procDefId=${process.id}&resType=image">${process.diagramResourceName}</a>--%></td>
 					<td><b title='流程版本号'>V: ${process.version}</b></td>
-					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<td><fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-MM-dd"/></td>
 					<td>
 						<a href="${ctx}/act/task/form?procDefId=${process.id}">启动流程</a>
 					</td>

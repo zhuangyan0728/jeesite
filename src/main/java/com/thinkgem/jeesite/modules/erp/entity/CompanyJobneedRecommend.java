@@ -112,7 +112,7 @@ public class CompanyJobneedRecommend extends DataEntity<CompanyJobneedRecommend>
 		this.attactpath = attactpath;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="发布时间不能为空")
 	public Date getPublistime() {
 		return publistime;

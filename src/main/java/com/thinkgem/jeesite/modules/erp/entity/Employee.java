@@ -222,7 +222,7 @@ public class Employee extends DataEntity<Employee> {
 		this.residenceno = residenceno;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getValidity() {
 		return validity;
 	}
@@ -268,7 +268,7 @@ public class Employee extends DataEntity<Employee> {
 		this.ifquite = ifquite;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	public Date getQutietime() {
 		return qutietime;
 	}

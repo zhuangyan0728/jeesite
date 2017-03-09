@@ -55,7 +55,7 @@
 			<tr>
 				<td>${leave.id}</td>
 				<td>${leave.createBy.name}</td>
-				<td><fmt:formatDate value="${leave.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${leave.createDate}" pattern="yyyy-MM-dd"/></td>
 				<td>${leave.reason}</td>
 				<c:if test="${not empty task}">
 					<td>${task.name}</td>

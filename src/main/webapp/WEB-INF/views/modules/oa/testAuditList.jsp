@@ -38,7 +38,7 @@
 				<td>${testAudit.office.name}</td>
 				<td>${testAudit.post}</td>
 				<td>${testAudit.content}</td>
-				<td><fmt:formatDate value="${testAudit.createDate}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${testAudit.createDate}" type="both" pattern="yyyy-MM-dd"/></td>
 				<shiro:hasPermission name="oa:testAudit:edit"><td>
     				<a href="${ctx}/oa/testAudit/form?id=${testAudit.id}">详情</a>
 					<a href="${ctx}/oa/testAudit/delete?id=${testAudit.id}" onclick="return confirmx('确认要删除该审批吗？', this.href)">删除</a>

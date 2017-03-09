@@ -60,7 +60,7 @@ public class Employeecount extends DataEntity<Employeecount> {
 		this.company = company;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="填报时间不能为空")
 	public Date getTime() {
 		return time;

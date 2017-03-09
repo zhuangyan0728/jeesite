@@ -119,7 +119,7 @@ public class CompanyJobneed extends DataEntity<CompanyJobneed> {
 		this.workedyear = workedyear;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ExcelField(title="发布时间", align=2, sort=70)
 	public Date getPublistime() {
 		return publistime;
@@ -129,7 +129,7 @@ public class CompanyJobneed extends DataEntity<CompanyJobneed> {
 		this.publistime = publistime;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ExcelField(title="到岗时间", align=2, sort=80)
 	public Date getJointime() {
 		return jointime;

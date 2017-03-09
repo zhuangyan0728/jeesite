@@ -179,7 +179,7 @@
 				</td>
 				-->
 				<td>
-					<fmt:formatDate value="${employee.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${employee.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
 					查看
