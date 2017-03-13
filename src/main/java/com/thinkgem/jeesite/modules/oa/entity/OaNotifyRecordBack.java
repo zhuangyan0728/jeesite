@@ -21,7 +21,16 @@ public class OaNotifyRecordBack extends DataEntity<OaNotifyRecordBack> {
 
 	private Date beginCreateDate;		// 开始 时间
 	private Date endCreateDate;		// 结束 时间
-	
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
+	private String file;
 	public OaNotifyRecordBack() {
 		super();
 	}

@@ -36,7 +36,9 @@
 					msgback=$("#backMsg").val();
 				}
 				var html4 = "<div class='msg'>" +
-	            "<div align='center'><span style='color:gray;padding-right:300px;'>"+$("#remarksMsg").val()+"</span></div><div class='xian' style='width:1000px;margin:0 auto;padding:0 200px; border-top:1px solid #ddd'></div><div align='center'><span id='backMsgSpan' style='padding-right:345px'>"+msgback+"</span></div>" +
+	            "<div align='center'><span style='color:gray;padding-right:300px;'>"
+						+$("#remarksMsg").val()
+						+"</span></div><div class='xian' style='width:1000px;margin:0 auto;padding:0 200px; border-top:1px solid #ddd'></div><div align='center'><span id='backMsgSpan' style='padding-right:345px'>"+msgback+"</span></div>" +
 	            "</div>";                
 				 $.jBox.open(html4, "平台回复", 500, 300, { showType: "show" , buttons: { "确定": true, "取消": false }});
 			});
@@ -46,9 +48,13 @@
 				var index=$("#jsRecordBackEdit").attr("value").toString();
 				var recordId=$("#recordId"+index).val();
 				var useId=$("#useId"+index).val();
-				var html2 = "<div class='msg'>" +
-	            "<p><span style='color:gray;align:center'>（选填，没有需求，就不需要回复！）</span></p><div align='center'><textarea id='messageIn' name='messageIn' rows='6' maxlength='2000' class='input-xxlarge required'></textarea></div>" +
-	            "</div>";
+				var html2 =
+						"<div class='msg'>" +
+	            			"<p><span style='color:gray;align:center'>（选填，没有需求，就不需要回复！）</span></p>" +
+								"<div align='center'>" +
+									"<form id='upform' action='${ctx}/oa/oaNotifyRecordBack/UserfilesDownloadServlet' enctype='multipart/form-data' method='post'>添加附件：<input type='file' name='file'><br/><textarea id='messageIn' name='messageIn' rows='6' maxlength='2000' class='input-xxlarge required'></textarea></form>"  +
+								"</div>" +
+						"</div>";
 	            
 				 $.jBox.open(html2, "回复", 500, 300, { showType: "show" , buttons: { "保存": true, "取消": false },
 					 submit:function (v, h, f) {
@@ -58,18 +64,22 @@
 									$.jBox.alert("请输入回复信息","提示");
 									return;
 								}
-				            	$.ajax({
+								var formData = new FormData($( "#upform" )[0]);
+								$.ajax({
 									url: "${ctx}/oa/oaNotifyRecordBack/saveRecordBack?nr_id="+recordId+"&messageIn="+encodeURIComponent(encodeURIComponent($("#messageIn").val()))+"&useId="+useId,
-									type: 'GET',
-									dataType: 'json',
+									type: 'POST',
+									data: formData,
+									async: false,
 									cache: false,
+									contentType: false,
+									processData: false,
 									async: true,
 									success:function (data) {
 										if(data.result=="ok")
 										{
 											$.jBox.alert(data.msg,"提示");
-											$("#jsRecordBackEdit").hide();
-											
+											//$("#jsRecordBackEdit").hide();
+
 										}else if(data.result=="false")
 										{
 											$.jBox.alert(data.msg,"提示");
@@ -125,7 +135,7 @@
 										if(data.result=="ok")
 										{
 											$.jBox.alert(data.msg,"提示");
-											$("#jsRecordBackEditFrom").hide();
+											//$("#jsRecordBackEditFrom").hide();
 											
 										}else if(data.result=="false")
 										{
@@ -208,7 +218,7 @@
 					<sys:ckfinder input="files" type="files" uploadPath="/oa/notify" selectMultiple="true" readonly="true" />
 				</div>
 			</div>
-			<shiro:hasPermission name="oa:oaNotify:edit">
+
 			<div class="control-group">
 				<label class="control-label">接受人：</label>
 				<div class="controls">
@@ -236,19 +246,22 @@
 									${fns:getDictLabel(oaNotifyRecord.readFlag, 'oa_notify_read', '')}									
 									<c:if test="${oaNotifyRecord.readFlag ne '0'}">
 										<!-- 企业回复 -->
-										<c:if test="${oaNotifyRecord.user.id eq fns:getUser().id}">	
-										   <c:if test="${fns:getNotifyRecordBack(oaNotifyRecord.id).remarks eq null}">							   
+										<c:if test="${oaNotifyRecord.user.id eq fns:getUser().id}">
+											<a id="jsRecordBackEdit" href="javascript:void(0)" value=${ status.index + 1}>（回复）</a>
+											<a id="jsQueryRecordBack" href="javascript:void(0)">（查看平台回复）</a>
+										   <%--<c:if test="${fns:getNotifyRecordBack(oaNotifyRecord.id).remarks eq null}">
 												<!-- <a id="jsRecordBackEdit" href="#" value=${oaNotifyRecord.id}>（回复）</a> -->
 												<a id="jsRecordBackEdit" href="javascript:void(0)" value=${ status.index + 1}>（回复）</a>
 										   </c:if> 
 										   <c:if test="${fns:getNotifyRecordBack(oaNotifyRecord.id).back ne null}">							   
 												<a id="jsQueryRecordBack" href="javascript:void(0)">（查看平台回复）</a>
-										   </c:if> 
+										   </c:if> --%>
 										</c:if>
 										<!-- 平台回复 -->
 										<c:if test="${fns:getNotifyRecordBack(oaNotifyRecord.id).back eq null}">		
 										   	<c:if test="${fns:getNotifyRecordFrom(oaNotifyRecord.oaNotify.id).createBy eq fns:getUser().id}">							   
-												<a id="jsRecordBackEditFrom" href="javascript:void(0)" value=${ status.index + 1}>（回复1）</a>
+												<a id="jsRecordBackEditFrom" href="javascript:void(0)" value=${ status.index + 1}>（回复）</a>
+												${fns:getNotifyRecordBack(oaNotifyRecord.id).remarks}
 										   	</c:if> 
 										</c:if>
 										<input type="hidden" id="backMsg" value="${fns:getNotifyRecordBack(oaNotifyRecord.id).back}"/>
@@ -265,7 +278,7 @@
 					已查阅：${oaNotify.readNum} &nbsp; 未查阅：${oaNotify.unReadNum} &nbsp; 总共：${oaNotify.readNum + oaNotify.unReadNum}
 				</div>
 			</div>
-			</shiro:hasPermission>
+
 		</c:if>
 		<div class="form-actions">
 			<c:if test="${oaNotify.status ne '1'}">

@@ -200,9 +200,15 @@ public class UploadUtils {
 			List<FileItem> items = null;
 			// Parse the request
 			try {
-				items = upload.parseRequest(request);
-			} catch (FileUploadException e) {
+				try {
+					items = upload.parseRequest(request);
+				} catch (FileUploadException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
+			} catch (RuntimeException e) {
 				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
 				e.printStackTrace();
 			}
 

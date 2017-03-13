@@ -58,7 +58,7 @@
 	<form:form id="searchForm" modelAttribute="employee" action="${ctx}/erp/employee/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
+		<ul class="ul-form" style="overflow:auto;">
 			<li><label>公司名称：</label>
 				<c:choose>
 					<c:when test="${empty fns:getUser().company.id}">
@@ -74,7 +74,7 @@
 							 <label >${employee.company.name}</label>  
 						 </c:if>
 						 <c:if test="${empty employee.company.id}">						   
-							<label>${fns:getUser().company.name}</label>
+							 ${fns:getUser().company.name}
 						 </c:if>						 
 					</c:otherwise>
 				</c:choose>

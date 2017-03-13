@@ -3,8 +3,13 @@
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +44,20 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 	 * @return
 	 */
 	public OaNotify getRecordList(OaNotify oaNotify) {
-		oaNotify.setOaNotifyRecordList(oaNotifyRecordDao.findList(new OaNotifyRecord(oaNotify)));
+		List<OaNotifyRecord> reList =  oaNotifyRecordDao.findList(new OaNotifyRecord(oaNotify));
+		User curUser = UserUtils.getUser();
+		List<OaNotifyRecord> resultList = new ArrayList<OaNotifyRecord>();
+		if(null != curUser && reList!=resultList){
+			if(curUser.getCompany() != null && StringUtils.isNotBlank(curUser.getCompany().getId())){
+				for(OaNotifyRecord item:reList){
+					if(item.getUser().getId().equals(curUser.getId())){
+						resultList.add(item);
+					}
+				}
+			}
+
+		}
+		oaNotify.setOaNotifyRecordList(resultList);
 		return oaNotify;
 	}
 	

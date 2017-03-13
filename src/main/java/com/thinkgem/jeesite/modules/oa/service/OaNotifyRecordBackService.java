@@ -3,8 +3,11 @@
  */
 package com.thinkgem.jeesite.modules.oa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +34,7 @@ public class OaNotifyRecordBackService extends CrudService<OaNotifyRecordBackDao
 	}
 	
 	public List<OaNotifyRecordBack> findList(OaNotifyRecordBack oaNotifyRecordBack) {
-		return super.findList(oaNotifyRecordBack);
+        return super.findList(oaNotifyRecordBack);
 	}
 	
 	public Page<OaNotifyRecordBack> findPage(Page<OaNotifyRecordBack> page, OaNotifyRecordBack oaNotifyRecordBack) {
@@ -61,7 +64,20 @@ public class OaNotifyRecordBackService extends CrudService<OaNotifyRecordBackDao
 	@Transactional(readOnly = false)
 	public int saveRecordBack(OaNotifyRecordBack oaNotifyRecordBack) {
 		int rd=0;
-		rd=oaNotifyRecordBackDao.insert(oaNotifyRecordBack);
+		OaNotifyRecordBack param = new OaNotifyRecordBack();
+		param.setNrId(oaNotifyRecordBack.getNrId());
+		param.setCreateBy(oaNotifyRecordBack.getCreateBy());
+
+		List<OaNotifyRecordBack> result = oaNotifyRecordBackDao.findList(param);
+		if(null != result &&result.size()>0){
+			rd=result.size();
+		}
+		if(rd>0){
+			rd=oaNotifyRecordBackDao.update(oaNotifyRecordBack);
+		}else {
+			rd=oaNotifyRecordBackDao.insert(oaNotifyRecordBack);
+		}
+
 		return rd;
 	}
 	

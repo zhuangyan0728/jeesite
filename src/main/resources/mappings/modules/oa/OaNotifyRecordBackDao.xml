@@ -10,6 +10,7 @@
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
 		a.update_by AS "updateBy.id",
+		a.files AS "file",
 		a.del_flag AS "delFlag",
 		a.back AS "back"
 	</sql>
@@ -34,6 +35,9 @@
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="nrId != null and nrId != ''">
 				AND a.nr_id = #{nrId}
+			</if>
+			<if test="createBy != null and createBy.id != null and createBy.id != ''">
+				AND a.create_by = #{createBy.id}
 			</if>
 			<!-- <if test="remarks != null and remarks != ''">
 				AND a.remarks LIKE 
@@ -78,6 +82,7 @@
 			id,
 			nr_id,
 			remarks,
+			files,
 			create_by,
 			create_date,
 			update_date,
@@ -88,6 +93,7 @@
 			#{id},
 			#{nrId},
 			#{remarks},
+			#{file},
 			#{createBy.id},
 			#{createDate},
 			#{updateDate},
@@ -101,6 +107,8 @@
 		UPDATE oa_notify_record_back SET 
 			update_date = #{updateDate},
 			update_by = #{updateBy.id},
+			files = #{file},
+			remarks = #{remarks},
 			back = #{back}
 		WHERE nr_id = #{nrId} and create_by = #{createBy.id}
 	</update>
