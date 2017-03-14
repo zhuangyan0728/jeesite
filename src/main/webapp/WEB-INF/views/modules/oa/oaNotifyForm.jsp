@@ -50,9 +50,9 @@
 				var useId=$("#useId"+index).val();
 				var html2 =
 						"<div class='msg'>" +
-	            			"<p><span style='color:gray;align:center'>（选填，没有需求，就不需要回复！）</span></p>" +
+	            			"<p><span style='color:gray;align:center'>（选填，没有需求，就不需要回复）</span></p>" +
 								"<div align='center'>" +
-									"<form id='upform' action='${ctx}/oa/oaNotifyRecordBack/UserfilesDownloadServlet' enctype='multipart/form-data' method='post'>添加附件：<input type='file' name='file'><br/><textarea id='messageIn' name='messageIn' rows='6' maxlength='2000' class='input-xxlarge required'></textarea></form>"  +
+									"<form id='upform'   enctype='multipart/form-data' method='post'>添加附件：<input type='file' name='file'><br/><textarea id='messageIn' name='messageIn' rows='6' maxlength='2000' class='input-xxlarge required'></textarea></form>"  +
 								"</div>" +
 						"</div>";
 	            
@@ -79,6 +79,7 @@
 										{
 											$.jBox.alert(data.msg,"提示");
 											//$("#jsRecordBackEdit").hide();
+											location.reload();
 
 										}else if(data.result=="false")
 										{
@@ -156,7 +157,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/oa/oaNotify/">通知列表</a></li>
+		<shiro:hasPermission name="oa:oaNotify:edit"><li><a href="${ctx}/oa/oaNotify/">通知列表</a></li></shiro:hasPermission>
 		<li class="active"><a href="${ctx}/oa/oaNotify/form?id=${oaNotify.id}">通知<shiro:hasPermission name="oa:oaNotify:edit">${oaNotify.status eq '1' ? '查看' : not empty oaNotify.id ? '修改' : '添加'}</shiro:hasPermission><shiro:lacksPermission name="oa:oaNotify:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="oaNotify" action="${ctx}/oa/oaNotify/save" method="post" class="form-horizontal">
@@ -228,6 +229,7 @@
 								<th>接受人</th>
 								<th>接受企业(部门)</th>
 								<th>阅读状态</th>
+								<th>已上传附件</th>
 								<th>阅读时间</th>
 							</tr>
 						</thead>
@@ -266,7 +268,12 @@
 										</c:if>
 										<input type="hidden" id="backMsg" value="${fns:getNotifyRecordBack(oaNotifyRecord.id).back}"/>
 										<input type="hidden" id="remarksMsg" value="${fns:getNotifyRecordBack(oaNotifyRecord.id).remarks}"/>
-									</c:if>								
+									</c:if>
+
+								</td>
+								<td>
+									<input type="hidden" id="files${oaNotifyRecord.id}" value="${fns:getNotifyRecordBack(oaNotifyRecord.id).file}"/>
+									<sys:ckfinder input="files${oaNotifyRecord.id}" type="files" uploadPath="" selectMultiple="true" readonly="true" />
 								</td>
 								<td>
 									<fmt:formatDate value="${oaNotifyRecord.readDate}" pattern="yyyy-MM-dd"/>

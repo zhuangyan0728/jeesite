@@ -116,6 +116,7 @@ public class OaNotifyRecordBackController extends BaseController {
 		String Path = Global.USERFILES_BASE_URL + "/recordBack/" +oaNotifyRecordBack.getNrId() +"/"+UserUtils.getUser().getId();
 		try {
 			String name = UpLoadFile(req,response,Path);
+			name = java.net.URLEncoder.encode(name, "utf-8");
 			if(StringUtils.isNotBlank(name)){
 				Path =Path + "/"+name;
 			}
@@ -286,8 +287,7 @@ public class OaNotifyRecordBackController extends BaseController {
 				}else{
 					//如果fileitem中封装的是上传文件，得到上传的文件名称，
 					String fileName = item.getName();
-					fileName = java.net.URLEncoder.encode(fileName, "utf-8");
-					returnName = fileName;
+
 					System.out.println(fileName);
 					if(fileName==null||fileName.trim().equals("")){
 						continue;
@@ -295,6 +295,7 @@ public class OaNotifyRecordBackController extends BaseController {
 					//注意：不同的浏览器提交的文件名是不一样的，有些浏览器提交上来的文件名是带有路径的，如：  c:\a\b\1.txt，而有些只是单纯的文件名，如：1.txt
 					//处理获取到的上传文件的文件名的路径部分，只保留文件名部分
 					fileName = fileName.substring(fileName.lastIndexOf(File.separator)+1);
+					returnName = fileName;
 					//获取item中的上传文件的输入流
 					InputStream is = item.getInputStream();
 					//创建一个文件输出流

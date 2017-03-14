@@ -47,13 +47,15 @@ public class OaNotifyService extends CrudService<OaNotifyDao, OaNotify> {
 		List<OaNotifyRecord> reList =  oaNotifyRecordDao.findList(new OaNotifyRecord(oaNotify));
 		User curUser = UserUtils.getUser();
 		List<OaNotifyRecord> resultList = new ArrayList<OaNotifyRecord>();
-		if(null != curUser && reList!=resultList){
+		if(null != curUser && reList!=null){
 			if(curUser.getCompany() != null && StringUtils.isNotBlank(curUser.getCompany().getId())){
 				for(OaNotifyRecord item:reList){
 					if(item.getUser().getId().equals(curUser.getId())){
 						resultList.add(item);
 					}
 				}
+			}else {
+				resultList.addAll(reList);
 			}
 
 		}
