@@ -28,6 +28,8 @@
 		a.qutietime AS "qutietime",
 		a.ifsenioremp AS "ifsenioremp",
 		a.birthday AS "birthday",
+		a.ifApply as "ifApply",
+		a.ifApplyAudit as "ifApplyAudit",
 		a.reward AS "reward",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
@@ -85,6 +87,12 @@
 			</if>
 			<if test="worktitle != null and worktitle != ''">
 				AND a.worktitle = #{worktitle}
+			</if>
+			<if test="ifApply != null and ifApply != ''">
+				AND a.ifApply = #{ifApply}
+			</if>
+			<if test="ifApplyAudit != null and ifApplyAudit != ''">
+				AND a.ifApplyAudit = #{ifApplyAudit}
 			</if>
 			<if test="reward != null and reward != ''">
 				AND a.reward = #{reward}
@@ -146,6 +154,8 @@
 			qutietime,
 			ifsenioremp,
 			birthday,
+			ifApply,
+			ifApplyAudit,
 			reward,
 			remarks,
 			create_by,
@@ -178,6 +188,8 @@
 			#{qutietime},
 			#{ifsenioremp},
 			#{birthday},
+			0,
+			0,
 			#{reward},
 			#{remarks},
 			#{createBy.id},
@@ -213,6 +225,8 @@
 			qutietime = #{qutietime},
 			ifsenioremp = #{ifsenioremp},
 			birthday= #{birthday},
+			ifApply= #{ifApply},
+			ifApplyAudit= #{ifApplyAudit},
 			reward = #{reward},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},

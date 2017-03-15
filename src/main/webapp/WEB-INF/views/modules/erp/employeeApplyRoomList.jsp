@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>企业人才信息管理</title>
+	<title>人才申请住房信息列表</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -52,10 +52,10 @@
 		</form>
 	</div>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/erp/employee/">企业人才信息列表</a></li>
-		<shiro:hasPermission name="erp:employee:edit"><li><a href="${ctx}/erp/employee/form">企业人才信息添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/erp/employee/">人才申请住房信息列表</a></li>
+		<%--<shiro:hasPermission name="erp:employee:edit"><li><a href="${ctx}/erp/employee/form">企业人才信息添加</a></li></shiro:hasPermission>--%>
 	</ul>
-	<form:form id="searchForm" modelAttribute="employee" action="${ctx}/erp/employee/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="employee" action="${ctx}/erp/employee/applylist" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form" style="overflow:auto;">
@@ -104,8 +104,8 @@
 			</li>
 			
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-			<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
-			<input id="btnImport" class="btn btn-primary" type="button" value="导入"/>
+			<%--<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>--%>
+			<%--<input id="btnImport" class="btn btn-primary" type="button" value="导入"/>--%>
 			</li>
 			
 			<li class="clearfix"></li>
@@ -132,9 +132,9 @@
 				<th>备注</th>
 				-->
 				<th>修改时间</th>
-				<th>查看</th>
-				<th>租房申请</th>
-				<shiro:hasPermission name="erp:employee:edit"><th>操作</th></shiro:hasPermission>
+				<th>审核状态</th>
+				<th>住房申请</th>
+
 			</tr>
 		</thead>
 		<tbody>
@@ -144,7 +144,7 @@
 				<td>
 					${employee.company.name}
 				</td>
-				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
+				<td><a href="${ctx}/erp/employee/applyform?id=${employee.id}">
 					${employee.name}
 				</a></td>
 				
@@ -182,37 +182,32 @@
 					<fmt:formatDate value="${employee.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
-					查看
+					<c:if test="${employee.ifApplyAudit =='0'}">
+						未审核
+					</c:if>
+					<c:if test="${employee.ifApplyAudit =='1'}">
+						审核通过
+					</c:if>
+					<c:if test="${employee.ifApplyAudit =='2'}">
+						拒绝申请
+					</c:if>
 				</a></td>
 				<td>
-					<shiro:hasPermission name="erp:employee:edit">
-						<c:if test="${employee.ifApply =='0'}">
-							<a href="${ctx}/erp/employee/roomApply?id=${employee.id}" onclick="return confirmx('确认要发起申请？', this.href)">发起租房申请</a>
-						</c:if>
-						<c:if test="${employee.ifApply =='1'}">
-							<a href="${ctx}/erp/employee/cancelApply?id=${employee.id}" onclick="return confirmx('确认要发起申请？', this.href)">撤销租房申请</a>
-						</c:if>
 
-					</shiro:hasPermission>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="javascript:void(0);" onclick ="printRoomApply('${employee.id}')">租住申请打印</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<c:if test="${employee.ifApply =='1'}">
-						审核状态：
-						<c:if test="${employee.ifApplyAudit =='0'}">
-							未审核
-						</c:if>
-						<c:if test="${employee.ifApplyAudit =='1'}">
-							审核通过
-						</c:if>
-						<c:if test="${employee.ifApplyAudit =='2'}">
-							拒绝申请
-						</c:if>
-					</c:if>
+
+
+
+						<a href="${ctx}/erp/employee/passApply?id=${employee.id}" onclick="return confirmx('确认要通过改申请信息吗？', this.href)">
+							通过申请&nbsp;
+							<a href="${ctx}/erp/employee/ajustApply?id=${employee.id}" onclick="return confirmx('确认要拒绝该企业人才信息吗？', this.href)">
+								拒绝申请</a>
+
+
 				</td>
-				<shiro:hasPermission name="erp:employee:edit"><td>
-    				<a href="${ctx}/erp/employee/form?id=${employee.id}">修改</a>
-					<a href="${ctx}/erp/employee/delete?id=${employee.id}" onclick="return confirmx('确认要删除该企业人才信息吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
+				<%--<shiro:hasPermission name="erp:employee:edit"><td>--%>
+    				<%--<a href="${ctx}/erp/employee/form?id=${employee.id}">审核通过</a>--%>
+					<%--<a href="${ctx}/erp/employee/delete?id=${employee.id}" onclick="return confirmx('确认要删除该企业人才信息吗？', this.href)">不通过</a>--%>
+				<%--</td></shiro:hasPermission>--%>
 			</tr>
 		</c:forEach>
 		</tbody>

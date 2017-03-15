@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>企业人才信息管理</title>
+	<title>企业人才申请住房管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -49,10 +49,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/erp/employee/">企业人才信息列表</a></li>
-		<li class="active"><a href="${ctx}/erp/employee/form?id=${employee.id}">企业人才信息<shiro:hasPermission name="erp:employee:edit">${not empty employee.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="erp:employee:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/erp/employee/">人才申请住房信息列表</a></li>
+		<li class="active"><a href="${ctx}/erp/employee/applyform?id=${employee.id}">人才申请住房信息<shiro:hasPermission name="erp:employee:edit">${not empty employee.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="erp:employee:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="employee" action="${ctx}/erp/employee/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="employee" action="${ctx}/erp/employee/passApply" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
 	<table>
@@ -75,10 +75,6 @@
 									 <label>${employee.company.name}</label>
 								 </c:if>
 								 <c:if test="${empty employee.company.id}">
-									 <div style="display: none;">
-										 <sys:treeselect id="company" name="company.id" value="${fns:getUser().company.id}" labelName="company.name" labelValue="${fns:getUser().company.name}"
-														 title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
-									 </div>
 									<label>${fns:getUser().company.name}</label>
 								 </c:if>
 							</c:otherwise>
@@ -338,22 +334,13 @@
 			</td>
 		</tr>
 
-		<tr>
-			<td colspan=2 align="left">
-				<div class="control-group">
-					<label class="control-label">备注：</label>
-					<div class="controls">
-						<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="500" class="input-xxlarge "/>
-					</div>
-				</div>
-			</td>
-		</tr>
+
 
 
 			<tr>
 				<td colspan=2 align="left">
 					<div class="form-actions">
-			<shiro:hasPermission name="erp:employee:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="erp:employee:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="审核通过"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 					</div>
 					</td>

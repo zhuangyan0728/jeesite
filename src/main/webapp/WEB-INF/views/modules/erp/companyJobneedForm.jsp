@@ -69,8 +69,12 @@
 											 </div> 
 											 <label>${employee.company.name}</label>  
 										 </c:if>
-										 <c:if test="${empty employee.company.id}">						   
-											<label>${fns:getUser().company.name}</label>
+										 <c:if test="${empty employee.company.id}">
+											 <div style="display: none;">
+												 <sys:treeselect id="company" name="company.id" value="${fns:getUser().company.id}" labelName="company.name" labelValue="${fns:getUser().company.name}"
+																 title="公司" url="/erp/companyInfo/treeData?type=1"  cssStyle = "width:225px"/>
+											 </div>
+											 <label>${fns:getUser().company.name}</label>
 										 </c:if>						 
 									</c:otherwise>
 								</c:choose>

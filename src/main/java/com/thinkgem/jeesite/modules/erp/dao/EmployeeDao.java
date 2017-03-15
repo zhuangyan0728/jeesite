@@ -7,6 +7,8 @@ import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.erp.entity.Employee;
 
+import java.util.List;
+
 /**
  * 企业人才管理DAO接口
  * @author zhuangyan
@@ -14,5 +16,5 @@ import com.thinkgem.jeesite.modules.erp.entity.Employee;
  */
 @MyBatisDao
 public interface EmployeeDao extends CrudDao<Employee> {
-	
+
 }

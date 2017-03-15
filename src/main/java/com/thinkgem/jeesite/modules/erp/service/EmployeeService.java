@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.erp.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,28 +23,35 @@ import com.thinkgem.jeesite.modules.erp.dao.EmployeeDao;
 @Transactional(readOnly = true)
 public class EmployeeService extends CrudService<EmployeeDao, Employee> {
 
+	@Autowired
+	private EmployeeDao employeeDao;
 	public Employee get(String id) {
 		return super.get(id);
 	}
-	
+
 	public List<Employee> findList(Employee employee) {
 		employee.getSqlMap().put("dsf", companyDataScopeFilter(employee.getCurrentUser(), "cid", ""));
 		return super.findList(employee);
 	}
-	
+
 	public Page<Employee> findPage(Page<Employee> page, Employee employee) {
 		employee.getSqlMap().put("dsf", companyDataScopeFilter(employee.getCurrentUser(), "cid", ""));
 		return super.findPage(page, employee);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(Employee employee) {
 		super.save(employee);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(Employee employee) {
 		super.delete(employee);
 	}
-	
+
+	public Page<Employee> findApplyRoomPage(Page<Employee> page, Employee employee){
+
+		return page;
+	}
+
 }

@@ -115,10 +115,14 @@ public class OaNotifyRecordBackController extends BaseController {
 
 		String Path = Global.USERFILES_BASE_URL + "/recordBack/" +oaNotifyRecordBack.getNrId() +"/"+UserUtils.getUser().getId();
 		try {
+
 			String name = UpLoadFile(req,response,Path);
 			name = java.net.URLEncoder.encode(name, "utf-8");
 			if(StringUtils.isNotBlank(name)){
-				Path =Path + "/"+name;
+
+				Path = "/jsqyq/" + Path + "/"+name;
+
+
 			}
 		} catch (ServletException e) {
 			e.printStackTrace();

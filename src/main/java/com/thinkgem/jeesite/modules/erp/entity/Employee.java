@@ -52,7 +52,25 @@ public class Employee extends DataEntity<Employee> {
 	private Integer ifsenioremp;		// 是否高端人才
 	private String reward;		// 奖励情况
 	private String birthday;		// 出生日期
-	
+
+	private Integer ifApply; //是否发起申请
+	private  Integer ifApplyAudit;//是发申请通过
+
+	public Integer getIfApply() {
+		return ifApply;
+	}
+
+	public void setIfApply(Integer ifApply) {
+		this.ifApply = ifApply;
+	}
+
+	public Integer getIfApplyAudit() {
+		return ifApplyAudit;
+	}
+
+	public void setIfApplyAudit(Integer ifApplyAudit) {
+		this.ifApplyAudit = ifApplyAudit;
+	}
 	public Employee() {
 		super();
 	}
