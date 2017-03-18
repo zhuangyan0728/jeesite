@@ -119,10 +119,7 @@ public class OaNotifyRecordBackController extends BaseController {
 			String name = UpLoadFile(req,response,Path);
 			name = java.net.URLEncoder.encode(name, "utf-8");
 			if(StringUtils.isNotBlank(name)){
-
-				Path = "/jsqyq/" + Path + "/"+name;
-
-
+				Path = "/jsgyq/" + Path + "/"+name;
 			}
 		} catch (ServletException e) {
 			e.printStackTrace();

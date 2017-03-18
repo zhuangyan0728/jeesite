@@ -30,6 +30,10 @@
 		a.birthday AS "birthday",
 		a.ifApply as "ifApply",
 		a.ifApplyAudit as "ifApplyAudit",
+		a.ifBuyApply as "ifBuyApply",
+		a.ifBuyApplyAudit as "ifBuyApplyAudit",
+		a.ifRentApply as "ifRentApply",
+		a.ifRentApplyAudit as "ifRentApplyAudit",
 		a.reward AS "reward",
 		a.remarks AS "remarks",
 		a.create_by AS "createBy.id",
@@ -93,6 +97,18 @@
 			</if>
 			<if test="ifApplyAudit != null and ifApplyAudit != ''">
 				AND a.ifApplyAudit = #{ifApplyAudit}
+			</if>
+			<if test="ifRentApply != null and ifRentApply != ''">
+				AND a.ifRentApply = #{ifRentApply}
+			</if>
+			<if test="ifRentApplyAudit != null and ifRentApplyAudit != ''">
+				AND a.ifRentApplyAudit = #{ifRentApplyAudit}
+			</if>
+			<if test="ifBuyApply != null and ifBuyApply != ''">
+				AND a.ifBuyApply = #{ifBuyApply}
+			</if>
+			<if test="ifBuyApplyAudit != null and ifBuyApplyAudit != ''">
+				AND a.ifBuyApplyAudit = #{ifBuyApplyAudit}
 			</if>
 			<if test="reward != null and reward != ''">
 				AND a.reward = #{reward}
@@ -227,6 +243,10 @@
 			birthday= #{birthday},
 			ifApply= #{ifApply},
 			ifApplyAudit= #{ifApplyAudit},
+			ifBuyApply= #{ifBuyApply},
+			ifBuyApplyAudit= #{ifBuyApplyAudit},
+			ifRentApply= #{ifRentApply},
+			ifRentApplyAudit= #{ifRentApplyAudit},
 			reward = #{reward},
 			remarks = #{remarks},
 			update_by = #{updateBy.id},

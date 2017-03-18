@@ -164,7 +164,7 @@ public class EmployeeController extends BaseController {
 
 
 	/**
-	 * --------------------------------------住房申请相关------------
+	 * --------------------------------------人才公寓房申请相关------------
 	 */
 
 	@RequiresPermissions("erp:employee:view")
@@ -188,7 +188,7 @@ public class EmployeeController extends BaseController {
     public String roomApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApply(1);
         employeeService.save(employee);
-        addMessage(redirectAttributes, "申请住房成功");
+        addMessage(redirectAttributes, "申请人才公寓成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
     }
 
@@ -197,8 +197,8 @@ public class EmployeeController extends BaseController {
     public String cancelApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApply(0);
         employeeService.save(employee);
-        addMessage(redirectAttributes, "取消住房申请成功");
-        return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
+        addMessage(redirectAttributes, "取消人才公寓申请成功");
+        return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist/?repage";
     }
 
     @RequiresPermissions("erp:employee:view")
@@ -206,7 +206,7 @@ public class EmployeeController extends BaseController {
     public String passApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApplyAudit(1);
         employeeService.save(employee);
-        addMessage(redirectAttributes, "申请住房信息成功");
+        addMessage(redirectAttributes, "申请人才公寓成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist/?repage";
     }
 
@@ -215,10 +215,121 @@ public class EmployeeController extends BaseController {
     public String ajustApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApplyAudit(2);
         employeeService.save(employee);
-        addMessage(redirectAttributes, "拒绝住房信息成功");
+        addMessage(redirectAttributes, "拒绝人才公寓申请成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist?repage";
     }
 
 
+	/**
+	 * --------------------------------------人才购房申请相关------------
+	 */
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = {"buylist"})
+	public String buyRoomList(Employee employee, HttpServletRequest request, HttpServletResponse response, Model model) {
+		employee.setIfBuyApply(1);
+		Page<Employee> page = employeeService.findPage(new Page<Employee>(request, response), employee);
+		model.addAttribute("page", page);
+		return "modules/erp/employeeBuyRoomList";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "buyform")
+	public String buyForm(Employee employee, Model model) {
+		model.addAttribute("employee", employee);
+		return "modules/erp/employeeBuyRoomForm";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "buyApply")
+	public String buyApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfBuyApply(1);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "购买住房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "cancelBuyApply")
+	public String cancelBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfBuyApply(0);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "取消购房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "passBuyApply")
+	public String passBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfBuyApplyAudit(1);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "审核购房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "ajustBuyApply")
+	public String ajustBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfBuyApplyAudit(2);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "拒绝购房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist?repage";
+	}
+
+	/**
+	 * --------------------------------------人才租房申请相关------------
+	 */
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = {"rentlist"})
+	public String rentRoomList(Employee employee, HttpServletRequest request, HttpServletResponse response, Model model) {
+		employee.setIfRentApply(1);
+		Page<Employee> page = employeeService.findPage(new Page<Employee>(request, response), employee);
+		model.addAttribute("page", page);
+		return "modules/erp/employeeRentRoomList";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "rentform")
+	public String rentForm(Employee employee, Model model) {
+		model.addAttribute("employee", employee);
+		return "modules/erp/employeeRentRoomForm";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "rentApply")
+	public String rentApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfRentApply(1);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "租房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "cancelRentApply")
+	public String cancelRentApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfRentApply(0);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "取消租房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "passRentApply")
+	public String passRentApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfRentApplyAudit(1);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "审核租房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist/?repage";
+	}
+
+	@RequiresPermissions("erp:employee:view")
+	@RequestMapping(value = "ajustRentApply")
+	public String ajustRentApply(Employee employee, RedirectAttributes redirectAttributes) {
+		employee.setIfRentApplyAudit(2);
+		employeeService.save(employee);
+		addMessage(redirectAttributes, "拒绝租房申请成功");
+		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist?repage";
+	}
 
 }

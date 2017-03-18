@@ -152,7 +152,25 @@
 				 }
 				 );
 			});
-		});		
+		});
+
+		function downloadFile(url) {
+			try{
+				var elemIF = document.createElement("iframe");
+				elemIF.src = url;
+				elemIF.style.display = "none";
+				document.body.appendChild(elemIF);
+			}catch(e){
+
+			}
+		}
+
+		function  openfile(url) {
+			var a;
+			a = window.open(url, "_blank", "width=0, height=0,status=0");
+			a.document.execCommand("SaveAs");
+			a.close();
+		}
 	</script>
 </head>
 <body>
@@ -274,6 +292,10 @@
 								<td>
 									<input type="hidden" id="files${oaNotifyRecord.id}" value="${fns:getNotifyRecordBack(oaNotifyRecord.id).file}"/>
 									<sys:ckfinder input="files${oaNotifyRecord.id}" type="files" uploadPath="" selectMultiple="true" readonly="true" />
+									<a href="javascript:openfile('${fns:getNotifyRecordBack(oaNotifyRecord.id).file}');">
+									ttft123
+									</a>
+
 								</td>
 								<td>
 									<fmt:formatDate value="${oaNotifyRecord.readDate}" pattern="yyyy-MM-dd"/>

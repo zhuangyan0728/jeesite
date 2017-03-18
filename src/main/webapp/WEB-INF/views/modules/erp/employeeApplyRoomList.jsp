@@ -133,6 +133,7 @@
 				-->
 				<th>修改时间</th>
 				<th>审核状态</th>
+				<th>打印</th>
 				<th>住房申请</th>
 
 			</tr>
@@ -181,7 +182,7 @@
 				<td>
 					<fmt:formatDate value="${employee.updateDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				<td><a href="${ctx}/erp/employee/form?id=${employee.id}">
+				<td>
 					<c:if test="${employee.ifApplyAudit =='0'}">
 						未审核
 					</c:if>
@@ -191,19 +192,23 @@
 					<c:if test="${employee.ifApplyAudit =='2'}">
 						拒绝申请
 					</c:if>
-				</a></td>
-				<td>
-
-
-
-
-						<a href="${ctx}/erp/employee/passApply?id=${employee.id}" onclick="return confirmx('确认要通过改申请信息吗？', this.href)">
-							通过申请&nbsp;
-							<a href="${ctx}/erp/employee/ajustApply?id=${employee.id}" onclick="return confirmx('确认要拒绝该企业人才信息吗？', this.href)">
-								拒绝申请</a>
-
 
 				</td>
+				<td> <a href="javascript:void(0);" onclick ="printRoomApply('${employee.id}')">人才公寓申请打印</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<shiro:hasPermission name="erp:employee:edit">
+					<td>
+						<a href="${ctx}/erp/employee/cancelApply?id=${employee.id}" onclick="return confirmx('确认要发起申请？', this.href)">撤销租公寓申请</a>
+					</td>
+				</shiro:hasPermission>
+				<shiro:lacksPermission name="erp:employee:edit">
+					<td>
+						<a href="${ctx}/erp/employee/passApply?id=${employee.id}" onclick="return confirmx('确认要通过改申请信息吗？', this.href)">
+							通过申请&nbsp;</a>
+						<a href="${ctx}/erp/employee/ajustApply?id=${employee.id}" onclick="return confirmx('确认要拒绝该申请吗？', this.href)">
+							拒绝申请</a>
+					</td>
+
+				</shiro:lacksPermission>
 				<%--<shiro:hasPermission name="erp:employee:edit"><td>--%>
     				<%--<a href="${ctx}/erp/employee/form?id=${employee.id}">审核通过</a>--%>
 					<%--<a href="${ctx}/erp/employee/delete?id=${employee.id}" onclick="return confirmx('确认要删除该企业人才信息吗？', this.href)">不通过</a>--%>

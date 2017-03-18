@@ -53,8 +53,49 @@ public class Employee extends DataEntity<Employee> {
 	private String reward;		// 奖励情况
 	private String birthday;		// 出生日期
 
-	private Integer ifApply; //是否发起申请
+	private Integer ifApply; //是否发起公寓申请
 	private  Integer ifApplyAudit;//是发申请通过
+
+	private Integer ifBuyApply; //是否发起公寓申请
+	private  Integer ifBuyApplyAudit;//是发申请通过
+
+	private Integer ifRentApply; //是否发起公寓申请
+	private  Integer ifRentApplyAudit;//是发申请通过
+	
+	public Integer getIfBuyApply() {
+		return ifBuyApply;
+	}
+
+	public void setIfBuyApply(Integer ifBuyApply) {
+		this.ifBuyApply = ifBuyApply;
+	}
+
+	public Integer getIfBuyApplyAudit() {
+		return ifBuyApplyAudit;
+	}
+
+	public void setIfBuyApplyAudit(Integer ifBuyApplyAudit) {
+		this.ifBuyApplyAudit = ifBuyApplyAudit;
+	}
+
+	public Integer getIfRentApply() {
+		return ifRentApply;
+	}
+
+	public void setIfRentApply(Integer ifRentApply) {
+		this.ifRentApply = ifRentApply;
+	}
+
+	public Integer getIfRentApplyAudit() {
+		return ifRentApplyAudit;
+	}
+
+	public void setIfRentApplyAudit(Integer ifRentApplyAudit) {
+		this.ifRentApplyAudit = ifRentApplyAudit;
+	}
+
+
+
 
 	public Integer getIfApply() {
 		return ifApply;
