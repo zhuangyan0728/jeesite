@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.erp.dao;
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.erp.entity.Employee;
+import com.thinkgem.jeesite.modules.erp.entity.EmployeeApplyRecord;
 
 import java.util.List;
 
@@ -16,5 +17,6 @@ import java.util.List;
  */
 @MyBatisDao
 public interface EmployeeDao extends CrudDao<Employee> {
+    public void insertApplyLog(EmployeeApplyRecord eap);
 
 }

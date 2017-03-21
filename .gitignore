@@ -68,3 +68,7 @@
 /lib/lib/lang/zh-tw.xml
 /lib/lib/org/wltea/analyzer/dic/main2012.dic
 /lib/lib/org/wltea/analyzer/dic/quantifier.dic
+/.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.indexes/*.index
+/.metadata/.plugins/org.eclipse.core.runtime/.settings/*.prefs
+/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes
+/.metadata

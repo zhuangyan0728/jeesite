@@ -259,5 +259,30 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<insert id="insertApplyLog" parameterType="com.thinkgem.jeesite.modules.erp.entity.EmployeeApplyRecord">
+		INSERT INTO employee_apply_record(
+		id,
+		empId,
+		type,
+		remarks,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		del_flag
+		) VALUES (
+		#{id},
+		#{empId},
+		#{type},
+		#{remarks},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{delFlag}
+		)
+	</insert>
+
 	
 </mapper>

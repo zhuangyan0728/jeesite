@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.erp.service;
 
 import java.util.List;
 
+import com.thinkgem.jeesite.modules.erp.entity.EmployeeApplyRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +50,15 @@ public class EmployeeService extends CrudService<EmployeeDao, Employee> {
 		super.delete(employee);
 	}
 
-	public Page<Employee> findApplyRoomPage(Page<Employee> page, Employee employee){
+	@Transactional(readOnly = false)
+	public void insertApplyLog(Employee empoyee,String type){
 
-		return page;
+		EmployeeApplyRecord ear = new EmployeeApplyRecord();
+		ear.setType(type);
+		ear.setEmpId(empoyee.getId());
+		ear.preInsert();
+		employeeDao.insertApplyLog(ear);
 	}
+
 
 }

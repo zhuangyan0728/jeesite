@@ -188,6 +188,7 @@ public class EmployeeController extends BaseController {
     public String roomApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApply(1);
         employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"申请人才公寓");
         addMessage(redirectAttributes, "申请人才公寓成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
     }
@@ -197,6 +198,7 @@ public class EmployeeController extends BaseController {
     public String cancelApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApply(0);
         employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"取消人才公寓申请");
         addMessage(redirectAttributes, "取消人才公寓申请成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist/?repage";
     }
@@ -206,7 +208,8 @@ public class EmployeeController extends BaseController {
     public String passApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApplyAudit(1);
         employeeService.save(employee);
-        addMessage(redirectAttributes, "申请人才公寓成功");
+		employeeService.insertApplyLog(employee,"审核人才公寓");
+        addMessage(redirectAttributes, "审核人才公寓成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist/?repage";
     }
 
@@ -215,6 +218,7 @@ public class EmployeeController extends BaseController {
     public String ajustApply(Employee employee, RedirectAttributes redirectAttributes) {
         employee.setIfApplyAudit(2);
         employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"拒绝人才公寓申请");
         addMessage(redirectAttributes, "拒绝人才公寓申请成功");
         return "redirect:"+Global.getAdminPath()+"/erp/employee/applylist?repage";
     }
@@ -245,6 +249,7 @@ public class EmployeeController extends BaseController {
 	public String buyApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfBuyApply(1);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"购买住房申请");
 		addMessage(redirectAttributes, "购买住房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
 	}
@@ -254,6 +259,7 @@ public class EmployeeController extends BaseController {
 	public String cancelBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfBuyApply(0);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"取消购房申请");
 		addMessage(redirectAttributes, "取消购房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist/?repage";
 	}
@@ -263,6 +269,7 @@ public class EmployeeController extends BaseController {
 	public String passBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfBuyApplyAudit(1);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"审核购房申请");
 		addMessage(redirectAttributes, "审核购房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist/?repage";
 	}
@@ -272,6 +279,7 @@ public class EmployeeController extends BaseController {
 	public String ajustBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfBuyApplyAudit(2);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"拒绝购房申请");
 		addMessage(redirectAttributes, "拒绝购房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/buylist?repage";
 	}
@@ -301,6 +309,7 @@ public class EmployeeController extends BaseController {
 	public String rentApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfRentApply(1);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"租房申请");
 		addMessage(redirectAttributes, "租房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/?repage";
 	}
@@ -310,6 +319,7 @@ public class EmployeeController extends BaseController {
 	public String cancelRentApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfRentApply(0);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"取消租房申请");
 		addMessage(redirectAttributes, "取消租房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist/?repage";
 	}
@@ -319,6 +329,7 @@ public class EmployeeController extends BaseController {
 	public String passRentApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfRentApplyAudit(1);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"审核租房申请");
 		addMessage(redirectAttributes, "审核租房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist/?repage";
 	}
@@ -328,6 +339,7 @@ public class EmployeeController extends BaseController {
 	public String ajustRentApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfRentApplyAudit(2);
 		employeeService.save(employee);
+		employeeService.insertApplyLog(employee,"拒绝租房申请");
 		addMessage(redirectAttributes, "拒绝租房申请成功");
 		return "redirect:"+Global.getAdminPath()+"/erp/employee/rentlist?repage";
 	}
