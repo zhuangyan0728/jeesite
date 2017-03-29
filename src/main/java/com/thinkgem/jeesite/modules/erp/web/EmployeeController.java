@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.erp.web;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -206,7 +207,9 @@ public class EmployeeController extends BaseController {
     @RequiresPermissions("erp:employee:view")
     @RequestMapping(value = "passApply")
     public String passApply(Employee employee, RedirectAttributes redirectAttributes) {
-        employee.setIfApplyAudit(1);
+
+		employee.setReason1(null);
+		employee.setIfApplyAudit(1);
         employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"审核人才公寓");
         addMessage(redirectAttributes, "审核人才公寓成功");
@@ -215,7 +218,15 @@ public class EmployeeController extends BaseController {
 
     @RequiresPermissions("erp:employee:view")
     @RequestMapping(value = "ajustApply")
-    public String ajustApply(Employee employee, RedirectAttributes redirectAttributes) {
+    public String ajustApply(Employee employee,HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String messageIn = request.getParameter("messageIn");
+		try {
+			messageIn=java.net.URLDecoder.decode(messageIn, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		employee.setReason1(messageIn);
         employee.setIfApplyAudit(2);
         employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"拒绝人才公寓申请");
@@ -268,6 +279,7 @@ public class EmployeeController extends BaseController {
 	@RequestMapping(value = "passBuyApply")
 	public String passBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfBuyApplyAudit(1);
+		employee.setReason3(null);
 		employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"审核购房申请");
 		addMessage(redirectAttributes, "审核购房申请成功");
@@ -276,7 +288,15 @@ public class EmployeeController extends BaseController {
 
 	@RequiresPermissions("erp:employee:view")
 	@RequestMapping(value = "ajustBuyApply")
-	public String ajustBuyApply(Employee employee, RedirectAttributes redirectAttributes) {
+	public String ajustBuyApply(Employee employee, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String messageIn = request.getParameter("messageIn");
+		try {
+			messageIn=java.net.URLDecoder.decode(messageIn, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		employee.setReason3(messageIn);
 		employee.setIfBuyApplyAudit(2);
 		employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"拒绝购房申请");
@@ -328,6 +348,7 @@ public class EmployeeController extends BaseController {
 	@RequestMapping(value = "passRentApply")
 	public String passRentApply(Employee employee, RedirectAttributes redirectAttributes) {
 		employee.setIfRentApplyAudit(1);
+		employee.setReason2(null);
 		employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"审核租房申请");
 		addMessage(redirectAttributes, "审核租房申请成功");
@@ -336,7 +357,14 @@ public class EmployeeController extends BaseController {
 
 	@RequiresPermissions("erp:employee:view")
 	@RequestMapping(value = "ajustRentApply")
-	public String ajustRentApply(Employee employee, RedirectAttributes redirectAttributes) {
+	public String ajustRentApply(Employee employee,HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		String messageIn = request.getParameter("messageIn");
+		try {
+			messageIn=java.net.URLDecoder.decode(messageIn, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		employee.setReason2(messageIn);
 		employee.setIfRentApplyAudit(2);
 		employeeService.save(employee);
 		employeeService.insertApplyLog(employee,"拒绝租房申请");

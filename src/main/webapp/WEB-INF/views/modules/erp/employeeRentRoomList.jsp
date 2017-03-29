@@ -19,6 +19,9 @@
 				$.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
 					bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
 			});
+
+
+
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -36,9 +39,60 @@
 			var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
 			window.open(openUrl,"_blank","height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft); 
 			 
-		} 
-		
-		
+		}
+
+		function test(uid){
+
+			var userid=uid;
+			var html2 =
+					"<div class='msg'>" +
+					"<p><span style='color:gray;align:center'>请填写拒绝意见</span></p>" +
+					"<div align='center'>" +
+					"<form id='upform' method='post'> <textarea id='messageIn' name='messageIn' rows='6' maxlength='2000' class='input-xxlarge required'></textarea></form>"  +
+					"</div>" +
+					"</div>";
+
+			$.jBox.open(html2, "拒绝", 500, 300, { showType: "show" , buttons: { "拒绝": true, "取消": false },
+				submit:function (v, h, f) {
+					if (v == true) {
+						if($("#messageIn").val()=="" || $("#messageIn").val()==null)
+						{
+							$.jBox.alert("请输入拒绝意见","提示");
+							return;
+						}
+						var formData = new FormData($( "#upform" )[0]);
+						$.ajax({
+							url: "${ctx}/erp/employee/ajustRentApply?id="+userid+"&messageIn="+encodeURIComponent(encodeURIComponent($("#messageIn").val())),
+							type: 'POST',
+							data: formData,
+							async: false,
+							cache: false,
+							contentType: false,
+							processData: false,
+							async: true,
+							success:function (data) {
+
+								if(data.result=="ok")
+								{
+									$.jBox.alert(data.msg,"提示");
+									//$("#jsRecordBackEdit").hide();
+
+
+								}else if(data.result=="false")
+								{
+									$.jBox.alert(data.msg,"提示");
+
+								}
+								location.reload();
+							},
+							error: function(jqXHR, textStatus, errorThrown) {
+								$.jBox.alert("通知失败","提示");
+							}
+						});
+					}
+				}
+			});
+		};
  			
 	</script>
 </head>
@@ -190,7 +244,8 @@
 						审核通过
 					</c:if>
 					<c:if test="${employee.ifRentApplyAudit =='2'}">
-						拒绝申请
+						拒绝申请<c:if test="${not empty employee.reason2}">
+					<label>（原因：${employee.reason2}）</label></c:if>
 					</c:if>
 
 				</td>
@@ -204,8 +259,9 @@
 					<td>
 						<a href="${ctx}/erp/employee/passRentApply?id=${employee.id}" onclick="return confirmx('确认要通过改申请信息吗？', this.href)">
 							通过申请&nbsp;</a>
-						<a href="${ctx}/erp/employee/ajustRentApply?id=${employee.id}" onclick="return confirmx('确认要拒绝该申请吗？', this.href)">
-							拒绝申请</a>
+						<%--<a href="${ctx}/erp/employee/ajustRentApply?id=${employee.id}" onclick="return confirmx('确认要拒绝该申请吗？', this.href)">--%>
+							<%--拒绝申请</a>--%>
+						<a id="jsRecordBackEdit" href="javascript:void(0)" value="${employee.id}" onclick="test('${employee.id}')">拒绝申请</a>
 					</td>
 
 				</shiro:lacksPermission>

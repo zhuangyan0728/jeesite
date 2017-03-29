@@ -61,7 +61,35 @@ public class Employee extends DataEntity<Employee> {
 
 	private Integer ifRentApply; //是否发起公寓申请
 	private  Integer ifRentApplyAudit;//是发申请通过
-	
+
+	public String getReason1() {
+		return reason1;
+	}
+
+	public void setReason1(String reason1) {
+		this.reason1 = reason1;
+	}
+
+	public String getReason2() {
+		return reason2;
+	}
+
+	public void setReason2(String reason2) {
+		this.reason2 = reason2;
+	}
+
+	public String getReason3() {
+		return reason3;
+	}
+
+	public void setReason3(String reason3) {
+		this.reason3 = reason3;
+	}
+
+	private String reason1;		// 公寓
+	private String reason2;		// 租房
+	private String reason3;		// 卖房
+
 	public Integer getIfBuyApply() {
 		return ifBuyApply;
 	}

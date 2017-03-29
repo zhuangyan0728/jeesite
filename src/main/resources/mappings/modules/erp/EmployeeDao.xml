@@ -40,6 +40,9 @@
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
+		a.reason1 as "reason1",
+		a.reason2 as "reason2",
+		a.reason3 as "reason3",
 		a.del_flag AS "delFlag"
 	</sql>
 	
@@ -249,6 +252,9 @@
 			ifRentApplyAudit= #{ifRentApplyAudit},
 			reward = #{reward},
 			remarks = #{remarks},
+			reason1 = #{reason1},
+			reason2 = #{reason2},
+			reason3 = #{reason3},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate}
 		WHERE id = #{id}
